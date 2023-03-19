@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace Melodify
 {
-    public partial class Library : Form
+    public partial class MainForm : Form
     {
-        public Library()
+        public MainForm()
         {
             InitializeComponent();
         }
 
-        private void Library_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
 
         }

@@ -1,6 +1,6 @@
 ﻿namespace Melodify
 {
-    partial class Library
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,14 @@
         {
             SuspendLayout();
             // 
-            // Library
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Name = "Library";
-            Text = "Library";
-            Load += Library_Load;
+            Name = "MainForm";
+            Text = "MainForm";
+            Load += MainForm_Load;
             ResumeLayout(false);
         }
 

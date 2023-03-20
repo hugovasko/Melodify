@@ -9,7 +9,7 @@ namespace Melodify
     public class Artist
     {
         public string Name { get; set; }
-        internal List<Album> Albums { get; set; }
+        public List<Album> Albums { get; set; }
 
         public Artist(string name)
         {

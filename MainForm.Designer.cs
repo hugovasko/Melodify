@@ -28,19 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            labelAlert = new Label();
             SuspendLayout();
+            // 
+            // labelAlert
+            // 
+            labelAlert.AutoSize = true;
+            labelAlert.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            labelAlert.Location = new Point(228, 195);
+            labelAlert.Name = "labelAlert";
+            labelAlert.Size = new Size(284, 21);
+            labelAlert.TabIndex = 0;
+            labelAlert.Text = "Melodify demo will be ready very soon!";
+            labelAlert.Click += labelAlert_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(labelAlert);
             Name = "MainForm";
             Text = "MainForm";
             Load += MainForm_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label labelAlert;
     }
 }

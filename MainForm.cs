@@ -21,5 +21,10 @@ namespace Melodify
         {
 
         }
+
+        private void labelAlert_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

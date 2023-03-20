@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Melodify
 {
-    internal class Album : MusicItem
+    public class Album : MusicItem
     {
         public Artist Artist { get; set; }
         public Genre Genre { get; set; }

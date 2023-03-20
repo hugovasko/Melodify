@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Melodify
 {
-    public class MusicItem
+    public abstract class MusicItem
     {
         public string Title { get; set; }
         public int Duration { get; set; }
 
-        public MusicItem(string title, int duration)
+        protected MusicItem(string title, int duration)
         {
             this.Title = title;
             this.Duration = duration;

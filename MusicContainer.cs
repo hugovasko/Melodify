@@ -10,66 +10,32 @@ namespace Melodify
     public class MusicContainer
     {
         public string Title { get; set; }
-        public List<Song> Songs { get; set; }
-        internal List<Album> Albums { get; set; }
-        public List<Playlist> Playlists { get; set; }
+        public List<IMusicItem> MusicItems { get; set; }
 
         public MusicContainer(string title)
         {
-            this.Title = title;
-            this.Songs = new List<Song>();
-            this.Albums = new List<Album>();
-            this.Playlists = new List<Playlist>();
+            Title = title;
+            MusicItems = new List<IMusicItem>();
         }
 
-        public void Add(object item)
+        public void Add(IMusicItem item)
         {
-            if (item is Song song)
-            {
-                this.Songs.Add(song);
-            }
-            else if (item is Album album)
-            {
-                this.Albums.Add(album);
-            }
-            else if (item is Playlist playlist)
-            {
-                this.Playlists.Add(playlist);
-            }
-            else
-            {
-                throw new ArgumentException("Invalid music item");
-            }
+            MusicItems.Add(item);
         }
 
-        public void Remove(object item)
+        public void Remove(IMusicItem item)
         {
-            if (item is Song song)
-            {
-                this.Songs.Remove(song);
-            }
-            else if (item is Album album)
-            {
-                this.Albums.Remove(album);
-            }
-            else if (item is Playlist playlist)
-            {
-                this.Playlists.Remove(playlist);
-            }
-            else
-            {
-                throw new ArgumentException("Invalid music item");
-            }
+            MusicItems.Remove(item);
         }
 
         public int GetTotalDuration()
         {
             int totalDuration = 0;
 
-            // Get total duration of all songs in the container
-            foreach (Song song in Songs)
+            // Get total duration of all items in the container
+            foreach (IMusicItem item in MusicItems)
             {
-                totalDuration += song.Duration;
+                totalDuration += item.Duration;
             }
 
             return totalDuration;

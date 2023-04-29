@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/hugovasko/Melodify">
-	<img alt="Logo" width="200" heigth="200" src="./MusicPlayer/Resources/Logo.png" />
+	<img alt="Logo" width="200" heigth="200" src="./Melodify/Resources/Logo.png" />
   </a>
   <h1>Melodify - Задание за курсов проект </h1>
 </div>

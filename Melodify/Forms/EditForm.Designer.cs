@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             EditPanel = new System.Windows.Forms.Panel();
-            ButtonAuto = new System.Windows.Forms.Button();
-            RadioButtonLTR = new System.Windows.Forms.RadioButton();
-            RadioButtonRTL = new System.Windows.Forms.RadioButton();
             hr = new System.Windows.Forms.Panel();
             ButtonPrevious = new System.Windows.Forms.Button();
             ButtonNext = new System.Windows.Forms.Button();
@@ -55,21 +52,13 @@
             LabelTitle = new System.Windows.Forms.Label();
             ButtonChooseCover = new System.Windows.Forms.Button();
             PictureBoxCover = new System.Windows.Forms.PictureBox();
-            SearchTextBox = new System.Windows.Forms.TextBox();
-            SearchButton = new System.Windows.Forms.Button();
-            CancelButton = new System.Windows.Forms.Button();
             FlowLayoutPanelSong = new System.Windows.Forms.FlowLayoutPanel();
-            SearchPanel = new System.Windows.Forms.Panel();
             EditPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PictureBoxCover).BeginInit();
-            SearchPanel.SuspendLayout();
             SuspendLayout();
             // 
             // EditPanel
             // 
-            EditPanel.Controls.Add(ButtonAuto);
-            EditPanel.Controls.Add(RadioButtonLTR);
-            EditPanel.Controls.Add(RadioButtonRTL);
             EditPanel.Controls.Add(hr);
             EditPanel.Controls.Add(ButtonPrevious);
             EditPanel.Controls.Add(ButtonNext);
@@ -98,45 +87,6 @@
             EditPanel.Size = new System.Drawing.Size(582, 481);
             EditPanel.TabIndex = 35;
             EditPanel.Paint += EditPanel_Paint;
-            // 
-            // ButtonAuto
-            // 
-            ButtonAuto.BackColor = System.Drawing.Color.FromArgb(5, 18, 18);
-            ButtonAuto.Cursor = System.Windows.Forms.Cursors.Hand;
-            ButtonAuto.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(176, 176, 176);
-            ButtonAuto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            ButtonAuto.ForeColor = System.Drawing.Color.FromArgb(176, 176, 176);
-            ButtonAuto.Location = new System.Drawing.Point(342, 455);
-            ButtonAuto.Name = "ButtonAuto";
-            ButtonAuto.Size = new System.Drawing.Size(75, 23);
-            ButtonAuto.TabIndex = 70;
-            ButtonAuto.Text = "Auto";
-            ButtonAuto.UseVisualStyleBackColor = false;
-            ButtonAuto.Click += ButtonAuto_Click;
-            // 
-            // RadioButtonLTR
-            // 
-            RadioButtonLTR.AutoSize = true;
-            RadioButtonLTR.Checked = true;
-            RadioButtonLTR.Location = new System.Drawing.Point(236, 166);
-            RadioButtonLTR.Name = "RadioButtonLTR";
-            RadioButtonLTR.Size = new System.Drawing.Size(91, 19);
-            RadioButtonLTR.TabIndex = 69;
-            RadioButtonLTR.TabStop = true;
-            RadioButtonLTR.Text = "Left To Right";
-            RadioButtonLTR.UseVisualStyleBackColor = true;
-            RadioButtonLTR.Click += RadioButtonLTR_CheckedChanged;
-            // 
-            // RadioButtonRTL
-            // 
-            RadioButtonRTL.AutoSize = true;
-            RadioButtonRTL.Location = new System.Drawing.Point(236, 189);
-            RadioButtonRTL.Name = "RadioButtonRTL";
-            RadioButtonRTL.Size = new System.Drawing.Size(91, 19);
-            RadioButtonRTL.TabIndex = 68;
-            RadioButtonRTL.Text = "Right To Left";
-            RadioButtonRTL.UseVisualStyleBackColor = true;
-            RadioButtonRTL.Click += RadioButtonRTL_CheckedChanged;
             // 
             // hr
             // 
@@ -216,6 +166,7 @@
             RichTextBoxLyrics.Size = new System.Drawing.Size(250, 270);
             RichTextBoxLyrics.TabIndex = 62;
             RichTextBoxLyrics.Text = "";
+            RichTextBoxLyrics.TextChanged += RichTextBoxLyrics_TextChanged;
             // 
             // TextBoxTrackCount
             // 
@@ -420,47 +371,6 @@
             PictureBoxCover.TabIndex = 35;
             PictureBoxCover.TabStop = false;
             // 
-            // SearchTextBox
-            // 
-            SearchTextBox.BackColor = System.Drawing.Color.FromArgb(18, 18, 18);
-            SearchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            SearchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            SearchTextBox.ForeColor = System.Drawing.Color.FromArgb(176, 176, 176);
-            SearchTextBox.Location = new System.Drawing.Point(3, 426);
-            SearchTextBox.Name = "SearchTextBox";
-            SearchTextBox.Size = new System.Drawing.Size(400, 23);
-            SearchTextBox.TabIndex = 37;
-            // 
-            // SearchButton
-            // 
-            SearchButton.BackColor = System.Drawing.Color.FromArgb(5, 18, 18);
-            SearchButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            SearchButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(176, 176, 176);
-            SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            SearchButton.ForeColor = System.Drawing.Color.FromArgb(176, 176, 176);
-            SearchButton.Location = new System.Drawing.Point(3, 455);
-            SearchButton.Name = "SearchButton";
-            SearchButton.Size = new System.Drawing.Size(190, 23);
-            SearchButton.TabIndex = 39;
-            SearchButton.Text = "Search";
-            SearchButton.UseVisualStyleBackColor = false;
-            SearchButton.Click += SearchButton_Click;
-            // 
-            // CancelButton
-            // 
-            CancelButton.BackColor = System.Drawing.Color.FromArgb(5, 18, 18);
-            CancelButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            CancelButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(176, 176, 176);
-            CancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            CancelButton.ForeColor = System.Drawing.Color.FromArgb(176, 176, 176);
-            CancelButton.Location = new System.Drawing.Point(213, 455);
-            CancelButton.Name = "CancelButton";
-            CancelButton.Size = new System.Drawing.Size(190, 23);
-            CancelButton.TabIndex = 38;
-            CancelButton.Text = "Cancel";
-            CancelButton.UseVisualStyleBackColor = false;
-            CancelButton.Click += CancelButton_Click;
-            // 
             // FlowLayoutPanelSong
             // 
             FlowLayoutPanelSong.Location = new System.Drawing.Point(3, 3);
@@ -468,24 +378,12 @@
             FlowLayoutPanelSong.Size = new System.Drawing.Size(400, 415);
             FlowLayoutPanelSong.TabIndex = 40;
             // 
-            // SearchPanel
-            // 
-            SearchPanel.Controls.Add(FlowLayoutPanelSong);
-            SearchPanel.Controls.Add(CancelButton);
-            SearchPanel.Controls.Add(SearchButton);
-            SearchPanel.Controls.Add(SearchTextBox);
-            SearchPanel.Location = new System.Drawing.Point(594, 8);
-            SearchPanel.Name = "SearchPanel";
-            SearchPanel.Size = new System.Drawing.Size(409, 481);
-            SearchPanel.TabIndex = 0;
-            // 
             // EditForm
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             BackColor = System.Drawing.Color.FromArgb(18, 18, 18);
-            ClientSize = new System.Drawing.Size(1012, 496);
+            ClientSize = new System.Drawing.Size(600, 496);
             Controls.Add(EditPanel);
-            Controls.Add(SearchPanel);
             ForeColor = System.Drawing.Color.White;
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -497,16 +395,11 @@
             EditPanel.ResumeLayout(false);
             EditPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PictureBoxCover).EndInit();
-            SearchPanel.ResumeLayout(false);
-            SearchPanel.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
         private System.Windows.Forms.Panel EditPanel;
-        private System.Windows.Forms.Button ButtonAuto;
-        private System.Windows.Forms.RadioButton RadioButtonLTR;
-        private System.Windows.Forms.RadioButton RadioButtonRTL;
         private System.Windows.Forms.Panel hr;
         private System.Windows.Forms.Button ButtonPrevious;
         private System.Windows.Forms.Button ButtonNext;
@@ -530,10 +423,6 @@
         private System.Windows.Forms.Label LabelTitle;
         private System.Windows.Forms.Button ButtonChooseCover;
         private System.Windows.Forms.PictureBox PictureBoxCover;
-        private System.Windows.Forms.TextBox SearchTextBox;
-        private System.Windows.Forms.Button SearchButton;
-        private new System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.FlowLayoutPanel FlowLayoutPanelSong;
-        private System.Windows.Forms.Panel SearchPanel;
     }
 }

@@ -6,20 +6,20 @@ namespace Melodify
 {
     public partial class PlaybackBarControl : UserControl
     {
-        private Point MousPosition;
+        private Point _mousePosition;
         public bool IsMouseDown;
-        private int val;
+        private int _val;
 
         public int Max { get; set; } = 100;
 
         public int Val
         {
-            get { return val; }
+            get { return _val; }
             set
             {
                 if (value >= 0 && value < Max)
                 {
-                    val = value;
+                    _val = value;
 
                     if (Max != 0)
                         ChangedProgressPanel.Left = (value * ProgressBarPanel.Width) / Max;
@@ -31,7 +31,7 @@ namespace Melodify
         {
             InitializeComponent();
 
-            val = 0;
+            _val = 0;
 
             ConfigPlaybackBarControlColor();
         }
@@ -41,7 +41,7 @@ namespace Melodify
             if (e.Button == MouseButtons.Left)
             {
                 IsMouseDown = true;
-                MousPosition = new Point(e.X, e.Y);
+                _mousePosition = new Point(e.X, e.Y);
             }
 
         }
@@ -55,10 +55,10 @@ namespace Melodify
         {
             if (IsMouseDown)
             {
-                Point NewPosition = new Point((ChangedProgressPanel.Left + (e.X - MousPosition.X)), ChangedProgressPanel.Top);
+                var newPosition = new Point((ChangedProgressPanel.Left + (e.X - _mousePosition.X)), ChangedProgressPanel.Top);
 
-                if (NewPosition.X >= ProgressBarPanel.Location.X && NewPosition.X <= (ProgressBarPanel.Width - ChangedProgressPanel.Width))
-                    ChangedProgressPanel.Location = NewPosition;
+                if (newPosition.X >= ProgressBarPanel.Location.X && newPosition.X <= (ProgressBarPanel.Width - ChangedProgressPanel.Width))
+                    ChangedProgressPanel.Location = newPosition;
             }
         }
 
@@ -73,12 +73,12 @@ namespace Melodify
         {
             if (ProgressBarPanel.Width != 0)
             {
-                val = (ChangedProgressPanel.Location.X * Max) / ProgressBarPanel.Width;
+                _val = (ChangedProgressPanel.Location.X * Max) / ProgressBarPanel.Width;
                 ConfigPlaybackBarControlColor();
             }
         }
 
-        void ConfigPlaybackBarControlColor()
+        private void ConfigPlaybackBarControlColor()
         {
             ProgressBarPanel.CreateGraphics().Clear(ProgressBarPanel.BackColor);
             ProgressBarPanel.CreateGraphics().FillRectangle(Brushes.DarkSlateGray, new Rectangle(0, 0, ChangedProgressPanel.Left, ProgressBarPanel.Height));

@@ -28,76 +28,80 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LabelTitle = new System.Windows.Forms.Label();
-            this.LabelDescription = new System.Windows.Forms.Label();
-            this.PictureBoxLogo = new System.Windows.Forms.PictureBox();
-            this.LinkLabelAppGodName = new System.Windows.Forms.LinkLabel();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxLogo)).BeginInit();
-            this.SuspendLayout();
+            LabelTitle = new System.Windows.Forms.Label();
+            LabelDescription = new System.Windows.Forms.Label();
+            PictureBoxLogo = new System.Windows.Forms.PictureBox();
+            LinkLabelAppCreatorName = new System.Windows.Forms.LinkLabel();
+            ((System.ComponentModel.ISupportInitialize)PictureBoxLogo).BeginInit();
+            SuspendLayout();
             // 
             // LabelTitle
             // 
-            this.LabelTitle.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTitle.ForeColor = System.Drawing.Color.Teal;
-            this.LabelTitle.Location = new System.Drawing.Point(12, 115);
-            this.LabelTitle.Name = "LabelTitle";
-            this.LabelTitle.Size = new System.Drawing.Size(280, 55);
-            this.LabelTitle.TabIndex = 1;
-            this.LabelTitle.Text = "Melodify";
-            this.LabelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            LabelTitle.Font = new System.Drawing.Font("Arial Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            LabelTitle.ForeColor = System.Drawing.Color.Teal;
+            LabelTitle.Location = new System.Drawing.Point(14, 133);
+            LabelTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelTitle.Name = "LabelTitle";
+            LabelTitle.Size = new System.Drawing.Size(327, 63);
+            LabelTitle.TabIndex = 1;
+            LabelTitle.Text = "Melodify";
+            LabelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LabelDescription
             // 
-            this.LabelDescription.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelDescription.Location = new System.Drawing.Point(47, 170);
-            this.LabelDescription.Name = "LabelDescription";
-            this.LabelDescription.Size = new System.Drawing.Size(124, 18);
-            this.LabelDescription.TabIndex = 1;
-            this.LabelDescription.Text = "Created with love by";
-            this.LabelDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            LabelDescription.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LabelDescription.Location = new System.Drawing.Point(59, 196);
+            LabelDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LabelDescription.Name = "LabelDescription";
+            LabelDescription.Size = new System.Drawing.Size(145, 21);
+            LabelDescription.TabIndex = 1;
+            LabelDescription.Text = "Created with love by";
+            LabelDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PictureBoxLogo
             // 
-            this.PictureBoxLogo.Image = global::Melodify.Properties.Resources.Logo;
-            this.PictureBoxLogo.Location = new System.Drawing.Point(102, 12);
-            this.PictureBoxLogo.Name = "PictureBoxLogo";
-            this.PictureBoxLogo.Size = new System.Drawing.Size(100, 100);
-            this.PictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PictureBoxLogo.TabIndex = 0;
-            this.PictureBoxLogo.TabStop = false;
+            PictureBoxLogo.Image = Properties.Resources.Logo;
+            PictureBoxLogo.Location = new System.Drawing.Point(119, 14);
+            PictureBoxLogo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            PictureBoxLogo.Name = "PictureBoxLogo";
+            PictureBoxLogo.Size = new System.Drawing.Size(117, 115);
+            PictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PictureBoxLogo.TabIndex = 0;
+            PictureBoxLogo.TabStop = false;
             // 
-            // LinkLabelAppGodName
+            // LinkLabelAppCreatorName
             // 
-            this.LinkLabelAppGodName.AutoSize = true;
-            this.LinkLabelAppGodName.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LinkLabelAppGodName.LinkColor = System.Drawing.Color.Green;
-            this.LinkLabelAppGodName.Location = new System.Drawing.Point(164, 170);
-            this.LinkLabelAppGodName.Name = "LinkLabelAppGodName";
-            this.LinkLabelAppGodName.Size = new System.Drawing.Size(97, 19);
-            this.LinkLabelAppGodName.TabIndex = 2;
-            this.LinkLabelAppGodName.TabStop = true;
-            this.LinkLabelAppGodName.Text = "Vasko Nikolov";
-            this.LinkLabelAppGodName.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelAppGodName_LinkClicked);
+            LinkLabelAppCreatorName.AutoSize = true;
+            LinkLabelAppCreatorName.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            LinkLabelAppCreatorName.LinkColor = System.Drawing.Color.Green;
+            LinkLabelAppCreatorName.Location = new System.Drawing.Point(186, 197);
+            LinkLabelAppCreatorName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LinkLabelAppCreatorName.Name = "LinkLabelAppCreatorName";
+            LinkLabelAppCreatorName.Size = new System.Drawing.Size(97, 19);
+            LinkLabelAppCreatorName.TabIndex = 2;
+            LinkLabelAppCreatorName.TabStop = true;
+            LinkLabelAppCreatorName.Text = "Vasko Nikolov";
+            LinkLabelAppCreatorName.LinkClicked += LinkLabelAppCreatorName_LinkClicked;
             // 
             // AboutForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(309, 224);
-            this.Controls.Add(this.LinkLabelAppGodName);
-            this.Controls.Add(this.LabelDescription);
-            this.Controls.Add(this.LabelTitle);
-            this.Controls.Add(this.PictureBoxLogo);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "AboutForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "About Melodify";
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxLogo)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(360, 258);
+            Controls.Add(LinkLabelAppCreatorName);
+            Controls.Add(LabelDescription);
+            Controls.Add(LabelTitle);
+            Controls.Add(PictureBoxLogo);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "AboutForm";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "About Melodify";
+            ((System.ComponentModel.ISupportInitialize)PictureBoxLogo).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -105,6 +109,6 @@
         private System.Windows.Forms.PictureBox PictureBoxLogo;
         private System.Windows.Forms.Label LabelTitle;
         private System.Windows.Forms.Label LabelDescription;
-        private System.Windows.Forms.LinkLabel LinkLabelAppGodName;
+        private System.Windows.Forms.LinkLabel LinkLabelAppCreatorName;
     }
 }

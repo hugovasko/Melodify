@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Net.Mime;
 using System.Windows.Forms;
+using Melodify.Properties;
+using TagLib;
+using File = TagLib.File;
 
 namespace Melodify.Classes
 {
-    class TagFile
+    internal class TagFile
     {
-        public static string GetTitle(string MusicPath)
+        public static string GetTitle(string musicPath)
         {
             try
             {
-                return TagLib.File.Create(MusicPath).Tag.Title;
+                return File.Create(musicPath).Tag.Title;
             }
             catch
             {
@@ -19,11 +23,11 @@ namespace Melodify.Classes
             }
         }
 
-        public static string GetArtists(string MusicPath)
+        public static string GetArtists(string musicPath)
         {
             try
             {
-                return string.Join(",", TagLib.File.Create(MusicPath).Tag.AlbumArtists);
+                return string.Join(",", File.Create(musicPath).Tag.AlbumArtists);
             }
             catch
             {
@@ -31,11 +35,11 @@ namespace Melodify.Classes
             }
         }
 
-        public static string GetAlbum(string MusicPath)
+        public static string GetAlbum(string musicPath)
         {
             try
             {
-                return TagLib.File.Create(MusicPath).Tag.Album;
+                return File.Create(musicPath).Tag.Album;
             }
             catch
             {
@@ -43,11 +47,11 @@ namespace Melodify.Classes
             }
         }
 
-        public static string GetYear(string MusicPath)
+        public static string GetYear(string musicPath)
         {
             try
             {
-                return TagLib.File.Create(MusicPath).Tag.Year.ToString();
+                return File.Create(musicPath).Tag.Year.ToString();
             }
             catch
             {
@@ -55,14 +59,13 @@ namespace Melodify.Classes
             }
         }
 
-        public static string GetTrack(string MusicPath)
+        public static string GetTrack(string musicPath)
         {
             try
             {
-                if (TagLib.File.Create(MusicPath).Tag.Track.ToString().Length == 1)
-                    return ("0" + TagLib.File.Create(MusicPath).Tag.Track.ToString());
-                else
-                    return TagLib.File.Create(MusicPath).Tag.Track.ToString();
+                if (File.Create(musicPath).Tag.Track.ToString().Length == 1)
+                    return ("0" + File.Create(musicPath).Tag.Track);
+                return File.Create(musicPath).Tag.Track.ToString();
             }
             catch
             {
@@ -70,11 +73,11 @@ namespace Melodify.Classes
             }
         }
 
-        public static string GetTrackCount(string MusicPath)
+        public static string GetTrackCount(string musicPath)
         {
             try
             {
-                return TagLib.File.Create(MusicPath).Tag.TrackCount.ToString();
+                return File.Create(musicPath).Tag.TrackCount.ToString();
             }
             catch
             {
@@ -82,26 +85,26 @@ namespace Melodify.Classes
             }
         }
 
-        public static string GetDisc(string MusicPath)
+        public static string GetDisc(string musicPath)
         {
-            return TagLib.File.Create(MusicPath).Tag.Disc.ToString();
+            return File.Create(musicPath).Tag.Disc.ToString();
         }
 
-        public static string GetDiscCount(string MusicPath)
+        public static string GetDiscCount(string musicPath)
         {
-            return TagLib.File.Create(MusicPath).Tag.DiscCount.ToString();
+            return File.Create(musicPath).Tag.DiscCount.ToString();
         }
 
-        public static string GetComposers(string MusicPath)
+        public static string GetComposers(string musicPath)
         {
-            return string.Join(",", TagLib.File.Create(MusicPath).Tag.Composers);
+            return string.Join(",", File.Create(musicPath).Tag.Composers);
         }
 
-        public static string GetGenre(string MusicPath)
+        public static string GetGenre(string musicPath)
         {
             try
             {
-                return string.Join(",", TagLib.File.Create(MusicPath).Tag.Genres);
+                return string.Join(",", File.Create(musicPath).Tag.Genres);
             }
             catch
             {
@@ -109,16 +112,16 @@ namespace Melodify.Classes
             }
         }
 
-        public static string GetGrouping(string MusicPath)
+        public static string GetGrouping(string musicPath)
         {
-            return TagLib.File.Create(MusicPath).Tag.Grouping;
+            return File.Create(musicPath).Tag.Grouping;
         }
 
-        public static string GetLyrics(string MusicPath)
+        public static string GetLyrics(string musicPath)
         {
             try
             {
-                return TagLib.File.Create(MusicPath).Tag.Lyrics;
+                return File.Create(musicPath).Tag.Lyrics;
             }
             catch
             {
@@ -126,225 +129,138 @@ namespace Melodify.Classes
             }
         }
 
-        public static Image GetCover(string MusicPath)
+        public static Image GetCover(string musicPath)
         {
             try
             {
-                TagLib.IPicture pic = TagLib.File.Create(MusicPath).Tag.Pictures[0];  //pic contains data for image.
-                MemoryStream stream = new MemoryStream(pic.Data.Data);  // create an image in memory stream
+                var pic = File.Create(musicPath).Tag.Pictures[0];  //pic contains data for image.
+                var stream = new MemoryStream(pic.Data.Data);  // create an image in memory stream
                 return new Bitmap(stream);
             }
             catch
             {
-                return Properties.Resources.MusicTon;
+                return Resources.MusicTon;
             }
         }
 
 
-        public static void SetTitle(string MusicPath, string Title)
+        public static void SetTitle(string musicPath, string title)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.Title = Title;
-                Track.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.Title = title;
+            track.Save();
         }
 
-        public static void SetArtists(string MusicPath, string Artists)
+        public static void SetArtists(string musicPath, string artists)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.AlbumArtists = Artists.Split(',');
-                Track.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.AlbumArtists = artists.Split(',');
+            track.Save();
         }
 
-        public static void SetAlbum(string MusicPath, string Album)
+        public static void SetAlbum(string musicPath, string album)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.Album = Album;
-                Track.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.Album = album;
+            track.Save();
         }
 
-        public static void SetYear(string MusicPath, string Year)
+        public static void SetYear(string musicPath, string year)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.Year = uint.Parse(Year);
-                Track.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.Year = uint.Parse(year);
+            track.Save();
         }
 
-        public static void SetTrackN(string MusicPath, string TrackN)
+        public static void SetTrackN(string musicPath, string trackN)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.Track = uint.Parse(TrackN);
-                Track.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.Track = uint.Parse(trackN);
+            track.Save();
         }
 
-        public static void SetTrackCount(string MusicPath, string TrackCount)
+        public static void SetTrackCount(string musicPath, string trackCount)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.TrackCount = uint.Parse(TrackCount);
-                Track.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.TrackCount = uint.Parse(trackCount);
+            track.Save();
         }
 
-        public static void SetDisc(string MusicPath, string Disc)
+        public static void SetDisc(string musicPath, string disc)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.Disc = uint.Parse(Disc);
-                Track.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.Disc = uint.Parse(disc);
+            track.Save();
         }
 
-        public static void SetDiscCount(string MusicPath, string DiscCount)
+        public static void SetDiscCount(string musicPath, string discCount)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.DiscCount = uint.Parse(DiscCount);
-                Track.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.DiscCount = uint.Parse(discCount);
+            track.Save();
         }
 
-        public static void SetComposers(string MusicPath, string Composers)
+        public static void SetComposers(string musicPath, string composers)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.Composers = Composers.Split(',');
-                Track.Save();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.Composers = composers.Split(',');
+            track.Save();
         }
 
-        public static void SetGenre(string MusicPath, string Genres)
+        public static void SetGenre(string musicPath, string genres)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.Genres = Genres.Split(',');
-                Track.Save();
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.Genres = genres.Split(',');
+            track.Save();
         }
 
-        public static void SetGrouping(string MusicPath, string Grouping)
+        public static void SetGrouping(string musicPath, string grouping)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.Grouping = Grouping;
-                Track.Save();
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.Grouping = grouping;
+            track.Save();
         }
 
-        public static void SetLyrics(string MusicPath, string Lyrics)
+        public static void SetLyrics(string musicPath, string lyrics)
         {
-            try
-            {
-                var Track = TagLib.File.Create(MusicPath);
+            var track = File.Create(musicPath);
 
-                Track.Tag.Lyrics = Lyrics;
-                Track.Save();
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            track.Tag.Lyrics = lyrics;
+            track.Save();
         }
 
-        public static void SetCover(string MusicPath, Image Picture)
+        public static void SetCover(string musicPath, Image picture)
         {
             try
             {
-                var Track = TagLib.File.Create(MusicPath);
+                var track = File.Create(musicPath);
 
-                Track.Tag.Pictures = new TagLib.IPicture[]
+                track.Tag.Pictures = new IPicture[]
                 {
-                new TagLib.Picture(new TagLib.ByteVector((byte[])new ImageConverter().ConvertTo(Picture, typeof(byte[]))))
+                new Picture(new ByteVector((byte[])new ImageConverter().ConvertTo(picture, typeof(byte[]))))
                 {
-                    Type = TagLib.PictureType.FrontCover,
+                    Type = PictureType.FrontCover,
                     Description = "Cover",
-                    MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg
+                    MimeType = MediaTypeNames.Image.Jpeg
                 }
                 };
-                Track.Save();
+                track.Save();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "====:TagLib -SetCover- :====");
-                MessageBox.Show(ex.GetType().ToString(), "====:TagLib -SetCover- :====");
+                MessageBox.Show(ex.ToString(), @"====:TagLib -SetCover- :====");
+                MessageBox.Show(ex.GetType().ToString(), @"====:TagLib -SetCover- :====");
             }
         }
 

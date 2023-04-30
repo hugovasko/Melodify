@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Melodify
 {
@@ -9,9 +10,9 @@ namespace Melodify
             InitializeComponent();
         }
 
-        private void LinkLabelAppGodName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabelAppCreatorName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(@"https://github.com/hugovasko");
+            Process.Start(new ProcessStartInfo("https://github.com/hugovasko") { UseShellExecute = true });
         }
     }
 }

@@ -2,28 +2,28 @@
 
 namespace Melodify.Classes
 {
-    class ConvertFrom
+    internal class ConvertFrom
     {
-        static public double TimeToSeconds(TimeSpan Time)
+        public static double TimeToSeconds(TimeSpan time)
         {
-            string TimeMinutString = Time.ToString("mm");
-            string TimeSecondString = Time.ToString("ss");
+            string timeMinuteString = time.ToString("mm");
+            string timeSecondString = time.ToString("ss");
 
-            double TimeMinutToSecond = Convert.ToDouble(TimeMinutString) * 60;
+            double timeMinuteToSecond = Convert.ToDouble(timeMinuteString) * 60;
 
-            double TimeSecond = Convert.ToDouble(TimeSecondString);
+            double timeSecond = Convert.ToDouble(timeSecondString);
 
-            return TimeMinutToSecond + TimeSecond;
+            return timeMinuteToSecond + timeSecond;
         }
 
-        static public double TimeToPercent(TimeSpan TotalTime, TimeSpan PartTime)
+        public static double TimeToPercent(TimeSpan totalTime, TimeSpan partTime)
         {
-            return (TimeToSeconds(PartTime) / TimeToSeconds(TotalTime)) * 100;
+            return (TimeToSeconds(partTime) / TimeToSeconds(totalTime)) * 100;
         }
 
-        static public TimeSpan SecondsToTime(int Second)
+        public static TimeSpan SecondsToTime(int second)
         {
-            return TimeSpan.FromSeconds(Second);
+            return TimeSpan.FromSeconds(second);
         }
 
     }

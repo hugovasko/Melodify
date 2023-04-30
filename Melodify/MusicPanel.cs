@@ -5,49 +5,49 @@ using Melodify.Classes;
 
 namespace Melodify
 {
-    class MusicPanel : Panel
+    internal class MusicPanel : Panel
     {
-        private readonly PictureBox MusicCover = new PictureBox();
+        private readonly PictureBox _musicCover = new();
         public string MusicPath = "";
-        private readonly Label MusicTitle = new Label();
+        private readonly Label _musicTitle = new();
 
         public MusicPanel()
         {
-            PanelInisialize();
+            PanelInitialize();
 
-            MusicTitle.Text = "Music Title";
-            MusicCover.Image = Properties.Resources.MusicTon;
+            _musicTitle.Text = @"Music Title";
+            _musicCover.Image = Properties.Resources.MusicTon;
         }
 
         public MusicPanel(string path)
         {
-            PanelInisialize();
+            PanelInitialize();
 
             this.MusicPath = path;
-            MusicTitle.Text = TagFile.GetTitle(path);
-            MusicCover.Image = TagFile.GetCover(path).GetThumbnailImage(40, 40, null, IntPtr.Zero);
+            _musicTitle.Text = TagFile.GetTitle(path);
+            _musicCover.Image = TagFile.GetCover(path).GetThumbnailImage(40, 40, null, IntPtr.Zero);
         }
 
-        void PanelInisialize()
+        private void PanelInitialize()
         {
             this.Cursor = Cursors.Hand;
             this.Size = new Size(155, 47);
             this.Enabled = true;
 
-            MusicTitle.ForeColor = Color.White;
-            MusicTitle.Size = new Size(103, 40);
-            MusicTitle.Location = new Point(49, 3);
-            MusicTitle.TextAlign = ContentAlignment.MiddleLeft;
-            MusicTitle.BackColor = Color.Transparent;
-            MusicTitle.Enabled = false;
-            this.Controls.Add(MusicTitle);
+            _musicTitle.ForeColor = Color.White;
+            _musicTitle.Size = new Size(103, 40);
+            _musicTitle.Location = new Point(49, 3);
+            _musicTitle.TextAlign = ContentAlignment.MiddleLeft;
+            _musicTitle.BackColor = Color.Transparent;
+            _musicTitle.Enabled = false;
+            this.Controls.Add(_musicTitle);
 
-            MusicCover.Location = new Point(3, 3);
-            MusicCover.Size = new Size(40, 40);
-            MusicCover.SizeMode = PictureBoxSizeMode.Zoom;
-            MusicCover.BackColor = Color.Transparent;
-            MusicCover.Enabled = false;
-            this.Controls.Add(MusicCover);
+            _musicCover.Location = new Point(3, 3);
+            _musicCover.Size = new Size(40, 40);
+            _musicCover.SizeMode = PictureBoxSizeMode.Zoom;
+            _musicCover.BackColor = Color.Transparent;
+            _musicCover.Enabled = false;
+            this.Controls.Add(_musicCover);
         }
 
     }

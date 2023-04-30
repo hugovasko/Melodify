@@ -1,21 +1,21 @@
 ﻿namespace Melodify.Classes
 {
-    enum MusicState
+    internal enum MusicState
     {
         Play, Pause
     }
 
-    enum ShuffleState
+    internal enum ShuffleState
     {
         On, Off
     }
 
-    enum LoopState
+    internal enum LoopState
     {
         One, All, Off
     }
 
-    enum SortedMethode
+    internal enum SortedMethod
     {
         Title, Artist, Album
     }

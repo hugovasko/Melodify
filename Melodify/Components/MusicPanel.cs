@@ -9,8 +9,8 @@ namespace Melodify.Components
     internal class MusicPanel : Panel
     {
         private readonly PictureBox _musicCover = new();
-        public string MusicPath = "";
         private readonly Label _musicTitle = new();
+        public string MusicPath = "";
 
         public MusicPanel()
         {
@@ -50,6 +50,5 @@ namespace Melodify.Components
             _musicCover.Enabled = false;
             Controls.Add(_musicCover);
         }
-
     }
 }

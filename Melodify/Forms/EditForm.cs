@@ -9,8 +9,8 @@ namespace Melodify.Forms
 {
     public partial class EditForm : Form
     {
-        private int _currentPlayingMusicIndex;
         private readonly Size _editFormSize = new(611, 535);
+        private int _currentPlayingMusicIndex;
 
         public EditForm()
         {
@@ -29,7 +29,6 @@ namespace Melodify.Forms
 
         private void EditForm_Load(object sender, EventArgs e)
         {
-
         }
 
         private void EditFormInitialise(int index)
@@ -148,7 +147,6 @@ namespace Melodify.Forms
 
                 MessageBox.Show(@"All Tags Saved");
                 Close();
-
             }
             catch (Exception ex)
             {
@@ -165,27 +163,30 @@ namespace Melodify.Forms
         private void ButtonPrevious_Click(object sender, EventArgs e)
         {
             if (_currentPlayingMusicIndex != 0)
+            {
                 EditFormInitialise(--_currentPlayingMusicIndex);
+            }
         }
 
         private void ButtonNext_Click(object sender, EventArgs e)
         {
             if (_currentPlayingMusicIndex != MainForm.Music.Count - 1)
+            {
                 EditFormInitialise(++_currentPlayingMusicIndex);
+            }
         }
 
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
             ((TextBox)sender).Tag = "Ok";
         }
+
         private void EditPanel_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void RichTextBoxLyrics_TextChanged(object sender, EventArgs e)
         {
-
         }
     }
 }

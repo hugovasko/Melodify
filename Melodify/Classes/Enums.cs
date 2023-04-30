@@ -2,22 +2,27 @@
 {
     internal enum MusicState
     {
-        Play, Pause
+        Play,
+        Pause
     }
 
     internal enum ShuffleState
     {
-        On, Off
+        On,
+        Off
     }
 
     internal enum LoopState
     {
-        One, All, Off
+        One,
+        All,
+        Off
     }
 
     internal enum SortedMethod
     {
-        Title, Artist, Album
+        Title,
+        Artist,
+        Album
     }
-
 }

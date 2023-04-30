@@ -33,5 +33,10 @@ namespace Melodify.Forms
         {
             Close();
         }
+
+        private void RichTextBoxLyrics_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

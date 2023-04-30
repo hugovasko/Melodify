@@ -9,6 +9,7 @@ using Melodify.Classes;
 using Melodify.Components;
 using Melodify.Properties;
 using NAudio.Wave;
+using Newtonsoft.Json;
 
 namespace Melodify.Forms
 {
@@ -30,6 +31,9 @@ namespace Melodify.Forms
         {
             InitializeComponent();
         }
+
+        private Stack<string> undoStack = new Stack<string>();
+        private Stack<string> redoStack = new Stack<string>();
 
         private void MusicPlayer_Load(object sender, EventArgs e)
         {
@@ -63,7 +67,11 @@ namespace Melodify.Forms
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                AddItemsInListToTheMainList(ofd.FileNames.ToList());
+                List<string> importedMusic = ofd.FileNames.ToList();
+                AddItemsInListToTheMainList(importedMusic);
+                undoStack.Push(JsonConvert.SerializeObject(importedMusic)); // Add import operation to the undo stack
+                redoStack.Clear(); // Clear the redo stack
+                UpdateUndoRedoMenuItems();
             }
         }
 
@@ -85,6 +93,9 @@ namespace Melodify.Forms
                 }
 
                 AddItemsInListToTheMainList(onlyAudioFiles);
+                undoStack.Push(JsonConvert.SerializeObject(onlyAudioFiles)); // Add import operation to the undo stack
+                redoStack.Clear(); // Clear the redo stack
+                UpdateUndoRedoMenuItems();
             }
         }
 
@@ -816,5 +827,65 @@ namespace Melodify.Forms
         {
             new AboutForm { Icon = Icon }.ShowDialog(this);
         }
+
+        private void AppMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void EditToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (undoStack.Count > 0)
+            {
+                string operation = undoStack.Pop();
+                List<string> importedMusic = JsonConvert.DeserializeObject<List<string>>(operation);
+
+                // Remove imported music from the main list and UI
+                foreach (string musicPath in importedMusic)
+                {
+                    int index = Music.IndexOf(musicPath);
+                    if (index >= 0)
+                    {
+                        Music.RemoveAt(index);
+                        FlowLayoutPanelMusic.Controls.RemoveAt(index);
+                    }
+                }
+
+                // Add the operation to the redo stack
+                redoStack.Push(operation);
+
+                UpdateUndoRedoMenuItems();
+            }
+        }
+
+        private void RedoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (redoStack.Count > 0)
+            {
+                string operation = redoStack.Pop();
+                List<string> importedMusic = JsonConvert.DeserializeObject<List<string>>(operation);
+
+                // Re-add the imported music to the main list and UI
+                AddItemsInListToTheMainList(importedMusic);
+
+                // Add the operation back to the undo stack
+                undoStack.Push(operation);
+
+                UpdateUndoRedoMenuItems();
+            }
+        }
+
+        private void UpdateUndoRedoMenuItems()
+        {
+            UndoToolStripMenuItem.Enabled = undoStack.Count > 0;
+            RedoToolStripMenuItem.Enabled = redoStack.Count > 0;
+        }
+
+
     }
 }

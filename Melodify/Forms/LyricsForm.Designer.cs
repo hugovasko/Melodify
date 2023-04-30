@@ -28,66 +28,66 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.hr = new System.Windows.Forms.Panel();
-            this.ButtonClose = new System.Windows.Forms.Button();
-            this.RichTextBoxLyrics = new System.Windows.Forms.RichTextBox();
-            this.SuspendLayout();
+            hr = new System.Windows.Forms.Panel();
+            ButtonClose = new System.Windows.Forms.Button();
+            RichTextBoxLyrics = new System.Windows.Forms.RichTextBox();
+            SuspendLayout();
             // 
             // hr
             // 
-            this.hr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.hr.Location = new System.Drawing.Point(33, 393);
-            this.hr.Name = "hr";
-            this.hr.Size = new System.Drawing.Size(539, 2);
-            this.hr.TabIndex = 67;
+            hr.BackColor = System.Drawing.Color.FromArgb(64, 64, 64);
+            hr.Location = new System.Drawing.Point(33, 393);
+            hr.Name = "hr";
+            hr.Size = new System.Drawing.Size(539, 2);
+            hr.TabIndex = 67;
             // 
             // ButtonClose
             // 
-            this.ButtonClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.ButtonClose.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(176)))), ((int)(((byte)(176)))));
-            this.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonClose.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ButtonClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(176)))), ((int)(((byte)(176)))));
-            this.ButtonClose.Location = new System.Drawing.Point(514, 401);
-            this.ButtonClose.Name = "ButtonClose";
-            this.ButtonClose.Size = new System.Drawing.Size(75, 25);
-            this.ButtonClose.TabIndex = 66;
-            this.ButtonClose.Text = "Close";
-            this.ButtonClose.UseVisualStyleBackColor = false;
-            this.ButtonClose.Click += new System.EventHandler(this.ButtonClose_Click);
+            ButtonClose.BackColor = System.Drawing.Color.FromArgb(5, 18, 18);
+            ButtonClose.Cursor = System.Windows.Forms.Cursors.Hand;
+            ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(176, 176, 176);
+            ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            ButtonClose.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            ButtonClose.ForeColor = System.Drawing.Color.FromArgb(176, 176, 176);
+            ButtonClose.Location = new System.Drawing.Point(514, 401);
+            ButtonClose.Name = "ButtonClose";
+            ButtonClose.Size = new System.Drawing.Size(75, 25);
+            ButtonClose.TabIndex = 66;
+            ButtonClose.Text = "Close";
+            ButtonClose.UseVisualStyleBackColor = false;
+            ButtonClose.Click += ButtonClose_Click;
             // 
             // RichTextBoxLyrics
             // 
-            this.RichTextBoxLyrics.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.RichTextBoxLyrics.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(176)))), ((int)(((byte)(176)))));
-            this.RichTextBoxLyrics.Location = new System.Drawing.Point(12, 12);
-            this.RichTextBoxLyrics.Name = "RichTextBoxLyrics";
-            this.RichTextBoxLyrics.ReadOnly = true;
-            this.RichTextBoxLyrics.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.RichTextBoxLyrics.Size = new System.Drawing.Size(578, 369);
-            this.RichTextBoxLyrics.TabIndex = 0;
-            this.RichTextBoxLyrics.TabStop = false;
-            this.RichTextBoxLyrics.Text = "";
+            RichTextBoxLyrics.BackColor = System.Drawing.Color.FromArgb(18, 18, 18);
+            RichTextBoxLyrics.ForeColor = System.Drawing.Color.FromArgb(176, 176, 176);
+            RichTextBoxLyrics.Location = new System.Drawing.Point(12, 12);
+            RichTextBoxLyrics.Name = "RichTextBoxLyrics";
+            RichTextBoxLyrics.ReadOnly = true;
+            RichTextBoxLyrics.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            RichTextBoxLyrics.Size = new System.Drawing.Size(578, 369);
+            RichTextBoxLyrics.TabIndex = 0;
+            RichTextBoxLyrics.TabStop = false;
+            RichTextBoxLyrics.Text = "";
+            RichTextBoxLyrics.TextChanged += RichTextBoxLyrics_TextChanged;
             // 
             // LyricsForm
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.ClientSize = new System.Drawing.Size(602, 434);
-            this.Controls.Add(this.hr);
-            this.Controls.Add(this.ButtonClose);
-            this.Controls.Add(this.RichTextBoxLyrics);
-            this.Font = new System.Drawing.Font("Comic Sans MS", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.Name = "LyricsForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LyricsForm";
-            this.Load += new System.EventHandler(this.LyricsForm_Load);
-            this.ResumeLayout(false);
-
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            BackColor = System.Drawing.Color.FromArgb(18, 18, 18);
+            ClientSize = new System.Drawing.Size(602, 434);
+            Controls.Add(hr);
+            Controls.Add(ButtonClose);
+            Controls.Add(RichTextBoxLyrics);
+            Font = new System.Drawing.Font("Comic Sans MS", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            ForeColor = System.Drawing.Color.White;
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            Name = "LyricsForm";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "LyricsForm";
+            Load += LyricsForm_Load;
+            ResumeLayout(false);
         }
 
         #endregion

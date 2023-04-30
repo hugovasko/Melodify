@@ -65,6 +65,8 @@ namespace Melodify.Forms
             LoopModeOneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             LoopModeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             LoopModeOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            UndoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            RedoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ShowAndHideMusicListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ShowAndHideSongLyricsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -283,6 +285,7 @@ namespace Melodify.Forms
             AppMenuStrip.Size = new System.Drawing.Size(968, 24);
             AppMenuStrip.TabIndex = 20;
             AppMenuStrip.Text = "menuStrip";
+            AppMenuStrip.ItemClicked += AppMenuStrip_ItemClicked;
             // 
             // FileToolStripMenuItem
             // 
@@ -323,15 +326,16 @@ namespace Melodify.Forms
             // 
             // EditToolStripMenuItem
             // 
-            EditToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { PlayAndPauseToolStripMenuItem, NextToolStripMenuItem, PreviousToolStripMenuItem, toolStripSeparator3, EditSongToolStripMenuItem, SortByToolStripMenuItem, toolStripSeparator4, ShuffleToolStripMenuItem, LoopModeToolStripMenuItem });
+            EditToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { PlayAndPauseToolStripMenuItem, NextToolStripMenuItem, PreviousToolStripMenuItem, toolStripSeparator3, EditSongToolStripMenuItem, SortByToolStripMenuItem, toolStripSeparator4, ShuffleToolStripMenuItem, LoopModeToolStripMenuItem, UndoToolStripMenuItem, RedoToolStripMenuItem });
             EditToolStripMenuItem.Name = "EditToolStripMenuItem";
             EditToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             EditToolStripMenuItem.Text = "&Edit";
+            EditToolStripMenuItem.Click += EditToolStripMenuItem_Click_1;
             // 
             // PlayAndPauseToolStripMenuItem
             // 
             PlayAndPauseToolStripMenuItem.Name = "PlayAndPauseToolStripMenuItem";
-            PlayAndPauseToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            PlayAndPauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             PlayAndPauseToolStripMenuItem.Text = "Play";
             PlayAndPauseToolStripMenuItem.Click += ButtonPlayPause_Click;
             // 
@@ -339,7 +343,7 @@ namespace Melodify.Forms
             // 
             NextToolStripMenuItem.Name = "NextToolStripMenuItem";
             NextToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N;
-            NextToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            NextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             NextToolStripMenuItem.Text = "&Next";
             NextToolStripMenuItem.Click += ButtonNext_Click;
             // 
@@ -347,19 +351,19 @@ namespace Melodify.Forms
             // 
             PreviousToolStripMenuItem.Name = "PreviousToolStripMenuItem";
             PreviousToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P;
-            PreviousToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            PreviousToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             PreviousToolStripMenuItem.Text = "&Previous";
             PreviousToolStripMenuItem.Click += ButtonPreviousClick;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new System.Drawing.Size(157, 6);
+            toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // EditSongToolStripMenuItem
             // 
             EditSongToolStripMenuItem.Name = "EditSongToolStripMenuItem";
-            EditSongToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            EditSongToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             EditSongToolStripMenuItem.Text = "Edit Song";
             EditSongToolStripMenuItem.Click += EditToolStripMenuItem_Click;
             // 
@@ -367,7 +371,7 @@ namespace Melodify.Forms
             // 
             SortByToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { TitleToolStripMenuItem, ArtistToolStripMenuItem, AlbumToolStripMenuItem });
             SortByToolStripMenuItem.Name = "SortByToolStripMenuItem";
-            SortByToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            SortByToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             SortByToolStripMenuItem.Text = "Sort by:";
             // 
             // TitleToolStripMenuItem
@@ -394,12 +398,12 @@ namespace Melodify.Forms
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new System.Drawing.Size(157, 6);
+            toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // ShuffleToolStripMenuItem
             // 
             ShuffleToolStripMenuItem.Name = "ShuffleToolStripMenuItem";
-            ShuffleToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            ShuffleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             ShuffleToolStripMenuItem.Text = "Shuffle Play";
             ShuffleToolStripMenuItem.Click += ButtonShuffle_Click;
             // 
@@ -407,7 +411,7 @@ namespace Melodify.Forms
             // 
             LoopModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { LoopModeOneToolStripMenuItem, LoopModeAllToolStripMenuItem, LoopModeOffToolStripMenuItem });
             LoopModeToolStripMenuItem.Name = "LoopModeToolStripMenuItem";
-            LoopModeToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            LoopModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             LoopModeToolStripMenuItem.Text = "Loop Mode";
             // 
             // LoopModeOneToolStripMenuItem
@@ -433,6 +437,20 @@ namespace Melodify.Forms
             LoopModeOffToolStripMenuItem.Text = "Off";
             LoopModeOffToolStripMenuItem.Click += LoopModeOffToolStripMenuItem_Click;
             // 
+            // UndoToolStripMenuItem
+            // 
+            UndoToolStripMenuItem.Name = "UndoToolStripMenuItem";
+            UndoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            UndoToolStripMenuItem.Text = "Undo";
+            UndoToolStripMenuItem.Click += UndoToolStripMenuItem_Click;
+            // 
+            // RedoToolStripMenuItem
+            // 
+            RedoToolStripMenuItem.Name = "RedoToolStripMenuItem";
+            RedoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            RedoToolStripMenuItem.Text = "Redo";
+            RedoToolStripMenuItem.Click += RedoToolStripMenuItem_Click;
+            // 
             // ViewToolStripMenuItem
             // 
             ViewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { ShowAndHideMusicListToolStripMenuItem, ShowAndHideSongLyricsToolStripMenuItem });
@@ -444,14 +462,14 @@ namespace Melodify.Forms
             // ShowAndHideMusicListToolStripMenuItem
             // 
             ShowAndHideMusicListToolStripMenuItem.Name = "ShowAndHideMusicListToolStripMenuItem";
-            ShowAndHideMusicListToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            ShowAndHideMusicListToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             ShowAndHideMusicListToolStripMenuItem.Text = "Hide Music List";
             ShowAndHideMusicListToolStripMenuItem.Click += ShowAndHideMusicListToolStripMenuItem_Click;
             // 
             // ShowAndHideSongLyricsToolStripMenuItem
             // 
             ShowAndHideSongLyricsToolStripMenuItem.Name = "ShowAndHideSongLyricsToolStripMenuItem";
-            ShowAndHideSongLyricsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            ShowAndHideSongLyricsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             ShowAndHideSongLyricsToolStripMenuItem.Text = "Show Music Lyrics";
             ShowAndHideSongLyricsToolStripMenuItem.Click += ShowSongLyricsToolStripMenuItem_Click;
             // 
@@ -663,5 +681,7 @@ namespace Melodify.Forms
         private System.Windows.Forms.ToolStripMenuItem LoopModeOffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ShowMusicLyricsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem UndoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RedoToolStripMenuItem;
     }
 }

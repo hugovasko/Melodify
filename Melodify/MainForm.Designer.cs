@@ -153,6 +153,7 @@
             TrackBarVolumeState.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             TrackBarVolumeState.AutoSize = false;
             TrackBarVolumeState.BackColor = System.Drawing.Color.Black;
+            TrackBarVolumeState.Cursor = System.Windows.Forms.Cursors.Hand;
             TrackBarVolumeState.Location = new System.Drawing.Point(815, 16);
             TrackBarVolumeState.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             TrackBarVolumeState.Name = "TrackBarVolumeState";
@@ -190,7 +191,7 @@
             ButtonShuffle.Cursor = System.Windows.Forms.Cursors.Hand;
             ButtonShuffle.FlatAppearance.BorderSize = 0;
             ButtonShuffle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            ButtonShuffle.Location = new System.Drawing.Point(231, 10);
+            ButtonShuffle.Location = new System.Drawing.Point(232, 10);
             ButtonShuffle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             ButtonShuffle.Name = "ButtonShuffle";
             ButtonShuffle.Size = new System.Drawing.Size(35, 29);
@@ -208,7 +209,7 @@
             ButtonLoop.Cursor = System.Windows.Forms.Cursors.Hand;
             ButtonLoop.FlatAppearance.BorderSize = 0;
             ButtonLoop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            ButtonLoop.Location = new System.Drawing.Point(196, 10);
+            ButtonLoop.Location = new System.Drawing.Point(193, 10);
             ButtonLoop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             ButtonLoop.Name = "ButtonLoop";
             ButtonLoop.Size = new System.Drawing.Size(35, 29);
@@ -239,11 +240,12 @@
             // 
             ButtonShowAndHideList.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             ButtonShowAndHideList.BackColor = System.Drawing.Color.Black;
+            ButtonShowAndHideList.BackgroundImage = Properties.Resources.ShownList;
             ButtonShowAndHideList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             ButtonShowAndHideList.Cursor = System.Windows.Forms.Cursors.Hand;
             ButtonShowAndHideList.FlatAppearance.BorderSize = 0;
             ButtonShowAndHideList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            ButtonShowAndHideList.Location = new System.Drawing.Point(161, 10);
+            ButtonShowAndHideList.Location = new System.Drawing.Point(152, 10);
             ButtonShowAndHideList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             ButtonShowAndHideList.Name = "ButtonShowAndHideList";
             ButtonShowAndHideList.Size = new System.Drawing.Size(35, 29);
@@ -572,6 +574,7 @@
             // FlowLayoutPanelMusic
             // 
             FlowLayoutPanelMusic.AutoScroll = true;
+            FlowLayoutPanelMusic.BackColor = System.Drawing.Color.Black;
             FlowLayoutPanelMusic.Dock = System.Windows.Forms.DockStyle.Right;
             FlowLayoutPanelMusic.ForeColor = System.Drawing.Color.White;
             FlowLayoutPanelMusic.Location = new System.Drawing.Point(752, 0);
@@ -579,6 +582,7 @@
             FlowLayoutPanelMusic.Name = "FlowLayoutPanelMusic";
             FlowLayoutPanelMusic.Size = new System.Drawing.Size(216, 418);
             FlowLayoutPanelMusic.TabIndex = 0;
+            FlowLayoutPanelMusic.Paint += FlowLayoutPanelMusic_Paint;
             // 
             // MainForm
             // 

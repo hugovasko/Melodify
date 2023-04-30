@@ -720,11 +720,6 @@ namespace Melodify.Forms
             AddItemsInListToTheMainList(onlyAudioFiles);
         }
 
-        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new AboutForm() { Icon = this.Icon }.ShowDialog(this);
-        }
-
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -743,6 +738,16 @@ namespace Melodify.Forms
         private void FlowLayoutPanelMusic_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void ViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutForm() { Icon = this.Icon }.ShowDialog(this);
         }
     }
 }

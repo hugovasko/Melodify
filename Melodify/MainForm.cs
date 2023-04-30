@@ -498,13 +498,15 @@ namespace Melodify
         {
             if (!FlowLayoutPanelMusic.Visible)
             {
-                ShowAndHideMusicListToolStripMenuItem.Text = "Hide Music List";
+                ShowAndHideMusicListToolStripMenuItem.Text = @"Hide Music List";
                 FlowLayoutPanelMusic.Visible = true;
+                ButtonShowAndHideList.BackgroundImage = Properties.Resources.ShownList;
             }
             else if (FlowLayoutPanelMusic.Visible)
             {
-                ShowAndHideMusicListToolStripMenuItem.Text = "Show Music List";
+                ShowAndHideMusicListToolStripMenuItem.Text = @"Show Music List";
                 FlowLayoutPanelMusic.Visible = false;
+                ButtonShowAndHideList.BackgroundImage = Properties.Resources.HiddenList;
             }
         }
 
@@ -747,5 +749,9 @@ namespace Melodify
                 Directory.Delete("TempFiles/", true);
         }
 
+        private void FlowLayoutPanelMusic_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

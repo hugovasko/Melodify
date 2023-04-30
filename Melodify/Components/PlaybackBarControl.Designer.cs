@@ -1,4 +1,4 @@
-﻿namespace Melodify
+﻿namespace Melodify.Components
 {
     partial class PlaybackBarControl
     {

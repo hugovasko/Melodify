@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace Melodify
+namespace Melodify.Forms
 {
     public partial class AboutForm : Form
     {

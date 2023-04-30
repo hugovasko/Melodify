@@ -1,4 +1,4 @@
-﻿namespace Melodify
+﻿namespace Melodify.Forms
 {
     partial class EditForm
     {

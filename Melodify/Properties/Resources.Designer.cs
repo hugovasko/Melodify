@@ -103,9 +103,9 @@ namespace Melodify.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MusicTon {
+        internal static System.Drawing.Bitmap Melodify {
             get {
-                object obj = ResourceManager.GetObject("MusicTon", resourceCulture);
+                object obj = ResourceManager.GetObject("Melodify", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,4 +1,6 @@
-﻿namespace Melodify
+﻿using Melodify.Components;
+
+namespace Melodify.Forms
 {
     partial class MainForm
     {
@@ -561,7 +563,7 @@
             // PictureBoxMusicCover
             // 
             PictureBoxMusicCover.BackColor = System.Drawing.Color.Black;
-            PictureBoxMusicCover.BackgroundImage = Properties.Resources.MusicTon;
+            PictureBoxMusicCover.BackgroundImage = Properties.Resources.Melodify;
             PictureBoxMusicCover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             PictureBoxMusicCover.Controls.Add(FlowLayoutPanelMusic);
             PictureBoxMusicCover.Dock = System.Windows.Forms.DockStyle.Fill;

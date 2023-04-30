@@ -1,14 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Drawing;
-using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Melodify.Classes;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
-namespace Melodify
+namespace Melodify.Forms
 {
     public partial class EditForm : Form
     {

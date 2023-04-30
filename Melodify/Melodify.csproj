@@ -10,15 +10,15 @@
     <StartupObject>Melodify.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Logo.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Logo.ico</ApplicationIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/hugovasko/Melodify</RepositoryUrl>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Update="MusicPanel.cs">
+	<ItemGroup>
+    <Compile Update="Components\MusicPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="PlaybackBarControl.cs">
+    <Compile Update="Components\PlaybackBarControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
@@ -28,7 +28,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Logo.ico" />
+    <Content Include="Resources\Logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />

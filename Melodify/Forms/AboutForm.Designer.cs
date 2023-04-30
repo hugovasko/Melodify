@@ -60,7 +60,8 @@
             // 
             // PictureBoxLogo
             // 
-            PictureBoxLogo.Image = Properties.Resources.Logo;
+            PictureBoxLogo.Image = Properties.Resources.MusicTon;
+            PictureBoxLogo.InitialImage = null;
             PictureBoxLogo.Location = new System.Drawing.Point(119, 14);
             PictureBoxLogo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             PictureBoxLogo.Name = "PictureBoxLogo";

@@ -161,7 +161,7 @@
             TrackBarVolumeState.TabIndex = 0;
             TrackBarVolumeState.TabStop = false;
             TrackBarVolumeState.TickStyle = System.Windows.Forms.TickStyle.None;
-            TrackBarVolumeState.Value = 5;
+            TrackBarVolumeState.Value = 3;
             TrackBarVolumeState.Scroll += TrackBarVolumeState_Scroll;
             // 
             // ButtonPrevious

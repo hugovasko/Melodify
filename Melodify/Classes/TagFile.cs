@@ -64,7 +64,10 @@ namespace Melodify.Classes
             try
             {
                 if (File.Create(musicPath).Tag.Track.ToString().Length == 1)
-                    return ("0" + File.Create(musicPath).Tag.Track);
+                {
+                    return "0" + File.Create(musicPath).Tag.Track;
+                }
+
                 return File.Create(musicPath).Tag.Track.ToString();
             }
             catch
@@ -133,8 +136,8 @@ namespace Melodify.Classes
         {
             try
             {
-                var pic = File.Create(musicPath).Tag.Pictures[0];  //pic contains data for image.
-                var stream = new MemoryStream(pic.Data.Data);  // create an image in memory stream
+                var pic = File.Create(musicPath).Tag.Pictures[0]; //pic contains data for image.
+                var stream = new MemoryStream(pic.Data.Data); // create an image in memory stream
                 return new Bitmap(stream);
             }
             catch
@@ -248,12 +251,12 @@ namespace Melodify.Classes
 
                 track.Tag.Pictures = new IPicture[]
                 {
-                new Picture(new ByteVector((byte[])new ImageConverter().ConvertTo(picture, typeof(byte[]))))
-                {
-                    Type = PictureType.FrontCover,
-                    Description = "Cover",
-                    MimeType = MediaTypeNames.Image.Jpeg
-                }
+                    new Picture(new ByteVector((byte[])new ImageConverter().ConvertTo(picture, typeof(byte[]))))
+                    {
+                        Type = PictureType.FrontCover,
+                        Description = "Cover",
+                        MimeType = MediaTypeNames.Image.Jpeg
+                    }
                 };
                 track.Save();
             }
@@ -263,6 +266,5 @@ namespace Melodify.Classes
                 MessageBox.Show(ex.GetType().ToString(), @"====:TagLib -SetCover- :====");
             }
         }
-
     }
 }

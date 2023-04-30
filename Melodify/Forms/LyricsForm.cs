@@ -33,6 +33,5 @@ namespace Melodify.Forms
         {
             Close();
         }
-
     }
 }

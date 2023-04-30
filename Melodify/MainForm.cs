@@ -12,17 +12,17 @@ namespace Melodify
 {
     public partial class MainForm : Form
     {
-        private SortedMethode LastSortedMethode;
-        private AudioFileReader AudioFileReader;
-        private bool IsFileGenerateException;
-        private int CurrentPlayingMusicIndex;
-        private List<string> AudioExtensions;
-        private ShuffleState ShuffleState;
-        private WaveOutEvent WaveOutEvent;
+        private SortedMethod _lastSortedMethod;
+        private AudioFileReader _audioFileReader;
+        private bool _isFileGenerateException;
+        private int _currentPlayingMusicIndex;
+        private List<string> _audioExtensions;
+        private ShuffleState _shuffleState;
+        private WaveOutEvent _waveOutEvent;
         public static List<string> Music;
-        private MusicState MusicState;
-        private LoopState LoopState;
-        private Random RandomValue;
+        private MusicState _musicState;
+        private LoopState _loopState;
+        private Random _randomValue;
 
         public MainForm()
         {
@@ -32,15 +32,15 @@ namespace Melodify
         private void MusicPlayer_Load(object sender, EventArgs e)
         {
             Music = new List<string>();
-            RandomValue = new Random();
-            MusicState = MusicState.Pause;
-            ShuffleState = ShuffleState.Off;
-            LoopState = LoopState.Off;
-            CurrentPlayingMusicIndex = 0;
-            IsFileGenerateException = false;
-            LastSortedMethode = SortedMethode.Title;
+            _randomValue = new Random();
+            _musicState = MusicState.Pause;
+            _shuffleState = ShuffleState.Off;
+            _loopState = LoopState.Off;
+            _currentPlayingMusicIndex = 0;
+            _isFileGenerateException = false;
+            _lastSortedMethod = SortedMethod.Title;
 
-            AudioExtensions = new List<string>()
+            _audioExtensions = new List<string>()
             {
                 ".mp3", ".m4a", ".ogg", ".wav", ".3gp", ".flac", ".m4b", ".m4p", ".mpeg", ".mp4"
             };
@@ -50,95 +50,94 @@ namespace Melodify
 
         private void OpenFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string audioFilter = "Audio Files|" + (from ext in AudioExtensions select ("*" + ext + "; ")) + "| All files |*.*";
+            string audioFilter = "Audio Files|" + string.Join(";", _audioExtensions.Select(ext => "*" + ext)) + "|All files|*.*";
 
-            OpenFileDialog OFD = new OpenFileDialog
+            OpenFileDialog ofd = new OpenFileDialog
             {
                 Multiselect = true,
-                //Filter = "Audio Files|*.mp3; *.m4a; *.ogg; *.wav; *.3gp; *.flac; *.m4b; *.m4p; *.mpeg; | All files |*.*"
                 Filter = audioFilter
             };
 
-            if (OFD.ShowDialog() == DialogResult.OK)
-                AddItemsInListToTheMainList(OFD.FileNames.ToList());
+            if (ofd.ShowDialog() == DialogResult.OK)
+                AddItemsInListToTheMainList(ofd.FileNames.ToList());
         }
 
         private void OpenFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog FBD = new FolderBrowserDialog();
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
 
-            if (FBD.ShowDialog() == DialogResult.OK)
+            if (fbd.ShowDialog() == DialogResult.OK)
             {
-                var AllFilesPath = Directory.EnumerateFiles(FBD.SelectedPath, "*.*", SearchOption.AllDirectories);
+                var allFilesPath = Directory.EnumerateFiles(fbd.SelectedPath, "*.*", SearchOption.AllDirectories);
 
-                List<string> OnlyAudioFiles = new List<string>();
-                foreach (var FilePath in AllFilesPath)
-                    if (FileIsAudio(FilePath))
-                        OnlyAudioFiles.Add(FilePath);
+                List<string> onlyAudioFiles = new List<string>();
+                foreach (var filePath in allFilesPath)
+                    if (FileIsAudio(filePath))
+                        onlyAudioFiles.Add(filePath);
 
-                AddItemsInListToTheMainList(OnlyAudioFiles);
+                AddItemsInListToTheMainList(onlyAudioFiles);
             }
         }
 
-        private void AddMusicToFlowLayoutPanel(string MusicPath)
+        private void AddMusicToFlowLayoutPanel(string musicPath)
         {
-            MusicPanel MusicPanel = new MusicPanel(MusicPath);
-            MusicPanel.DoubleClick += MusicPanel_DoubleClick;
-            MusicPanel.Click += MusicPanel_Click;
-            MusicPanel.MouseClick += MusicPanel_MouseClick;
-            FlowLayoutPanelMusic.Controls.Add(MusicPanel);
+            MusicPanel musicPanel = new MusicPanel(musicPath);
+            musicPanel.DoubleClick += MusicPanel_DoubleClick;
+            musicPanel.Click += MusicPanel_Click;
+            musicPanel.MouseClick += MusicPanel_MouseClick;
+            FlowLayoutPanelMusic.Controls.Add(musicPanel);
         }
 
         private void MusicPanel_DoubleClick(object sender, EventArgs e)
         {
-            MusicPanel ClickedMusic = sender as MusicPanel;
+            MusicPanel clickedMusic = sender as MusicPanel;
 
             for (int i = 0; i < FlowLayoutPanelMusic.Controls.Count; i++)
             {
-                if (FlowLayoutPanelMusic.Controls[i] == ClickedMusic)
+                if (FlowLayoutPanelMusic.Controls[i] == clickedMusic)
                 {
-                    CurrentPlayingMusicIndex = i;
-                    MusicInitialize(ClickedMusic.MusicPath);
+                    _currentPlayingMusicIndex = i;
+                    MusicInitialize(clickedMusic.MusicPath);
                 }
 
                 FlowLayoutPanelMusic.Controls[i].BackColor = Color.Transparent;
             }
 
-            ClickedMusic.BackColor = Color.FromArgb(28, 28, 28);
+            clickedMusic.BackColor = Color.FromArgb(28, 28, 28);
         }
 
         private void MusicPanel_Click(object sender, EventArgs e)
         {
-            MusicPanel ClickedMusic = sender as MusicPanel;
+            MusicPanel clickedMusic = sender as MusicPanel;
 
             foreach (MusicPanel musicPanel in FlowLayoutPanelMusic.Controls)
                 musicPanel.BackColor = Color.Transparent;
 
-            ClickedMusic.BackColor = Color.FromArgb(28, 28, 28);
+            clickedMusic.BackColor = Color.FromArgb(28, 28, 28);
         }
 
         private void MusicPanel_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                MusicPanel ClickedMusic = sender as MusicPanel;
+                MusicPanel clickedMusic = sender as MusicPanel;
 
                 //  Change the Background color of the Clicked Music Panel, and reset the others background color
                 foreach (MusicPanel musicPanel in FlowLayoutPanelMusic.Controls)
                     musicPanel.BackColor = Color.Transparent;
-                ClickedMusic.BackColor = Color.FromArgb(28, 28, 28);
+                clickedMusic.BackColor = Color.FromArgb(28, 28, 28);
 
                 //  Show the Context Menu Strip, on the Clicked Music Panel
-                Point PointLowerLeft = new Point(0, ClickedMusic.Height);
-                PointLowerLeft = ClickedMusic.PointToScreen(PointLowerLeft);
-                this.MusicPanelContextMenuStrip.Show(PointLowerLeft);
+                Point pointLowerLeft = new Point(0, clickedMusic.Height);
+                pointLowerLeft = clickedMusic.PointToScreen(pointLowerLeft);
+                this.MusicPanelContextMenuStrip.Show(pointLowerLeft);
             }
         }
 
-        private async void AddItemsInListToTheMainList(List<string> List)
+        private async void AddItemsInListToTheMainList(List<string> list)
         {
             //  Initialize the list and Play the first music
-            foreach (string item in List)
+            foreach (string item in list)
             {
                 if (FileIsAudio(item))
                 {
@@ -149,53 +148,53 @@ namespace Melodify
             }
         }
 
-        private bool FileIsAudio(string AudioFilePath)
+        private bool FileIsAudio(string audioFilePath)
         {
-            bool Value = false;
+            bool value = false;
 
-            foreach (string AudioExtension in AudioExtensions)
+            foreach (string audioExtension in _audioExtensions)
             {
-                if (AudioFilePath.ToLower().EndsWith(AudioExtension))
+                if (audioFilePath.ToLower().EndsWith(audioExtension))
                 {
-                    Value = true;
+                    value = true;
                     break;
                 }
             }
-            return Value;
+            return value;
         }
 
         private void MusicInitialize(string path)
         {
-            if (WaveOutEvent != null)
-                WaveOutEvent.Dispose();
-            if (AudioFileReader != null)
-                AudioFileReader.Dispose();
+            if (_waveOutEvent != null)
+                _waveOutEvent.Dispose();
+            if (_audioFileReader != null)
+                _audioFileReader.Dispose();
 
             try
             {
-                AudioFileReader = new AudioFileReader(path);
-                WaveOutEvent = new WaveOutEvent();
-                WaveOutEvent.Init(AudioFileReader);
-                WaveOutEvent.Play();
+                _audioFileReader = new AudioFileReader(path);
+                _waveOutEvent = new WaveOutEvent();
+                _waveOutEvent.Init(_audioFileReader);
+                _waveOutEvent.Play();
 
                 if (!AppTimer.Enabled)
                     AppTimer.Start();
 
-                MusicState = MusicState.Play;
+                _musicState = MusicState.Play;
                 ButtonPlayPause.BackgroundImage = Properties.Resources.Pause;
                 PlayAndPauseToolStripMenuItem.Text = "Pause";
 
-                PlaybackBarControl.Max = Convert.ToInt32(ConvertFrom.TimeToSeconds(AudioFileReader.TotalTime));
-                AudioFileReader.Volume = TrackBarVolumeState.Value / 10f;
+                PlaybackBarControl.Max = Convert.ToInt32(ConvertFrom.TimeToSeconds(_audioFileReader.TotalTime));
+                _audioFileReader.Volume = TrackBarVolumeState.Value / 10f;
 
                 //  This condition is related to the (Exception) Code Part
                 //  The Path Variable will be changed to the CurrentPlayingMusic, for get the original audio meatdata
-                if (IsFileGenerateException)
-                    path = Music[CurrentPlayingMusicIndex];
+                if (_isFileGenerateException)
+                    path = Music[_currentPlayingMusicIndex];
 
                 //  Change the Label Text to the Music Total Time
                 //  Change the PictureBox BackgroundImage to the Music Cover
-                LabelMusicEndTime.Text = AudioFileReader.TotalTime.ToString(@"mm\:ss");
+                LabelMusicEndTime.Text = _audioFileReader.TotalTime.ToString(@"mm\:ss");
                 PictureBoxMusicCover.BackgroundImage = TagFile.GetCover(path);
 
                 //  Change the Form Title to the Music Title + Artist
@@ -211,7 +210,7 @@ namespace Melodify
                 }
 
                 //  Reset the "IsFileGenerateException" value to false
-                IsFileGenerateException = false;
+                _isFileGenerateException = false;
             }
             catch
             {
@@ -219,9 +218,9 @@ namespace Melodify
                 {
                     //  If Audio File GenerateException, Convert it to 'wav' and save it
                     //  on a Temp File, so we can play it later
-                    AudioFileReader = null;
+                    _audioFileReader = null;
 
-                    using (var reader = new MediaFoundationReader(Music[CurrentPlayingMusicIndex]))
+                    using (var reader = new MediaFoundationReader(Music[_currentPlayingMusicIndex]))
                     {
                         if (!Directory.Exists("TempFiles/"))
                             Directory.CreateDirectory("TempFiles/");
@@ -231,14 +230,14 @@ namespace Melodify
                     }
 
                     //  Change the "IsFileGenerateException" value to true, because the File is Generate Exception
-                    IsFileGenerateException = true;
+                    _isFileGenerateException = true;
 
                     //  Try to play the Temp File, if isn't played alert a message to the user
                     MusicInitialize("TempFiles/temp.wav");
                 }
-                catch (Exception Ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("This song is hard for us to play it for you, Please play another one." + Environment.NewLine + "(" + Ex.Message + ")",
+                    MessageBox.Show("This song is hard for us to play it for you, Please play another one." + Environment.NewLine + "(" + ex.Message + ")",
                             "We are sorry!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -249,24 +248,24 @@ namespace Melodify
         {
             if (Music.Count != 0)
             {
-                if (MusicState == MusicState.Pause)
+                if (_musicState == MusicState.Pause)
                 {
-                    if (CurrentPlayingMusicIndex == 0 && WaveOutEvent == null)
-                        MusicInitialize(Music[CurrentPlayingMusicIndex]);
+                    if (_currentPlayingMusicIndex == 0 && _waveOutEvent == null)
+                        MusicInitialize(Music[_currentPlayingMusicIndex]);
                     else
                     {
-                        WaveOutEvent.Play();
+                        _waveOutEvent.Play();
 
-                        MusicState = MusicState.Play;
+                        _musicState = MusicState.Play;
                         ButtonPlayPause.BackgroundImage = Properties.Resources.Pause;
                         PlayAndPauseToolStripMenuItem.Text = "Pause";
                     }
                 }
-                else if (MusicState == MusicState.Play)
+                else if (_musicState == MusicState.Play)
                 {
-                    WaveOutEvent.Pause();
+                    _waveOutEvent.Pause();
 
-                    MusicState = MusicState.Pause;
+                    _musicState = MusicState.Pause;
                     ButtonPlayPause.BackgroundImage = Properties.Resources.Play;
                     PlayAndPauseToolStripMenuItem.Text = "Play";
                 }
@@ -275,14 +274,14 @@ namespace Melodify
                 OpenFilesToolStripMenuItem_Click(sender, e);
         }
 
-        private void ButtonPrevieus_Click(object sender, EventArgs e)
+        private void ButtonPreviousClick(object sender, EventArgs e)
         {
             //  Check if the Current Playing Music isn't the first one on list, and the list isn't clear
-            if (CurrentPlayingMusicIndex != 0 && Music.Count != 0)
+            if (_currentPlayingMusicIndex != 0 && Music.Count != 0)
             {
-                MusicInitialize(Music[--CurrentPlayingMusicIndex]);
+                MusicInitialize(Music[--_currentPlayingMusicIndex]);
 
-                FlowLayoutPanelMusic.ScrollControlIntoView(FlowLayoutPanelMusic.Controls[CurrentPlayingMusicIndex]);
+                FlowLayoutPanelMusic.ScrollControlIntoView(FlowLayoutPanelMusic.Controls[_currentPlayingMusicIndex]);
             }
         }
 
@@ -290,18 +289,18 @@ namespace Melodify
         {
             //  Check if the Current Playing Music isn't the last one on list, and the list isn't clear
             //  and check if the LoopState equale All, to reaPeat the Playlist from the first
-            if (CurrentPlayingMusicIndex != Music.Count - 1 && Music.Count != 0)
+            if (_currentPlayingMusicIndex != Music.Count - 1 && Music.Count != 0)
             {
-                MusicInitialize(Music[++CurrentPlayingMusicIndex]);
+                MusicInitialize(Music[++_currentPlayingMusicIndex]);
 
-                FlowLayoutPanelMusic.ScrollControlIntoView(FlowLayoutPanelMusic.Controls[CurrentPlayingMusicIndex]);
+                FlowLayoutPanelMusic.ScrollControlIntoView(FlowLayoutPanelMusic.Controls[_currentPlayingMusicIndex]);
             }
-            else if (CurrentPlayingMusicIndex == Music.Count - 1)
+            else if (_currentPlayingMusicIndex == Music.Count - 1)
             {
-                CurrentPlayingMusicIndex = 0;
-                MusicInitialize(Music[CurrentPlayingMusicIndex]);
+                _currentPlayingMusicIndex = 0;
+                MusicInitialize(Music[_currentPlayingMusicIndex]);
 
-                if (LoopState == LoopState.Off)
+                if (_loopState == LoopState.Off)
                     ButtonPlayPause.PerformClick();
             }
         }
@@ -310,23 +309,23 @@ namespace Melodify
         {
             if (Music.Count != 0)
             {
-                if (ShuffleState == ShuffleState.On)
+                if (_shuffleState == ShuffleState.On)
                 {
-                    ShuffleState = ShuffleState.Off;
+                    _shuffleState = ShuffleState.Off;
                     ShuffleToolStripMenuItem.Checked = false;
                     ButtonShuffle.BackgroundImage = Properties.Resources.shuffleOff;
 
-                    //  Order the list on the last SortedMethode
-                    if (LastSortedMethode == SortedMethode.Title)
+                    //  Order the list on the last SortedMethod
+                    if (_lastSortedMethod == SortedMethod.Title)
                         SortByTitleToolContextMenuStriItem.PerformClick();
-                    else if (LastSortedMethode == SortedMethode.Album)
+                    else if (_lastSortedMethod == SortedMethod.Album)
                         SortByAlbumToolContextMenuStriItem.PerformClick();
-                    else if (LastSortedMethode == SortedMethode.Artist)
+                    else if (_lastSortedMethod == SortedMethod.Artist)
                         SortByArtistToolContextMenuStriItem.PerformClick();
                 }
-                else if (ShuffleState == ShuffleState.Off)
+                else if (_shuffleState == ShuffleState.Off)
                 {
-                    ShuffleState = ShuffleState.On;
+                    _shuffleState = ShuffleState.On;
                     ShuffleToolStripMenuItem.Checked = true;
                     ButtonShuffle.BackgroundImage = Properties.Resources.shuffleOn;
 
@@ -339,38 +338,38 @@ namespace Melodify
                     AlbumToolStripMenuItem.Checked = false;
 
                     //  Shuffle the List
-                    List<string> ShuffledList = Music.OrderBy((item) => RandomValue.Next()).ToList();
+                    List<string> shuffledList = Music.OrderBy((item) => _randomValue.Next()).ToList();
 
                     // Clear the Lists and initialize the index and waveoutevent to null
                     ClearListToolStripMenuItem.PerformClick();
 
                     //  Initialize the list and Play the first music
-                    AddItemsInListToTheMainList(ShuffledList);
+                    AddItemsInListToTheMainList(shuffledList);
                 }
             }
         }
 
         private void ButtonLoop_Click(object sender, EventArgs e)
         {
-            if (LoopState == LoopState.One)
+            if (_loopState == LoopState.One)
             {
-                LoopState = LoopState.All;
+                _loopState = LoopState.All;
                 LoopModeAllToolStripMenuItem.Checked = true;
                 LoopModeOneToolStripMenuItem.Checked = false;
                 LoopModeOffToolStripMenuItem.Checked = false;
                 ButtonLoop.BackgroundImage = Properties.Resources.LoopAll;
             }
-            else if (LoopState == LoopState.All)
+            else if (_loopState == LoopState.All)
             {
-                LoopState = LoopState.Off;
+                _loopState = LoopState.Off;
                 LoopModeOffToolStripMenuItem.Checked = true;
                 LoopModeOneToolStripMenuItem.Checked = false;
                 LoopModeAllToolStripMenuItem.Checked = false;
                 ButtonLoop.BackgroundImage = Properties.Resources.LoopOff;
             }
-            else if (LoopState == LoopState.Off)
+            else if (_loopState == LoopState.Off)
             {
-                LoopState = LoopState.One;
+                _loopState = LoopState.One;
                 LoopModeOneToolStripMenuItem.Checked = true;
                 LoopModeAllToolStripMenuItem.Checked = false;
                 LoopModeOffToolStripMenuItem.Checked = false;
@@ -380,7 +379,7 @@ namespace Melodify
 
         private void LoopModeOneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoopState = LoopState.One;
+            _loopState = LoopState.One;
             LoopModeOneToolStripMenuItem.Checked = true;
             LoopModeAllToolStripMenuItem.Checked = false;
             LoopModeOffToolStripMenuItem.Checked = false;
@@ -389,7 +388,7 @@ namespace Melodify
 
         private void LoopModeAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoopState = LoopState.All;
+            _loopState = LoopState.All;
             LoopModeAllToolStripMenuItem.Checked = true;
             LoopModeOneToolStripMenuItem.Checked = false;
             LoopModeOffToolStripMenuItem.Checked = false;
@@ -398,7 +397,7 @@ namespace Melodify
 
         private void LoopModeOffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoopState = LoopState.Off;
+            _loopState = LoopState.Off;
             LoopModeOffToolStripMenuItem.Checked = true;
             LoopModeOneToolStripMenuItem.Checked = false;
             LoopModeAllToolStripMenuItem.Checked = false;
@@ -407,10 +406,10 @@ namespace Melodify
 
         private void ChangedProgressPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            if (AudioFileReader != null)
+            if (_audioFileReader != null)
             {
                 if (PlaybackBarControl.IsMouseDown)
-                    AudioFileReader.CurrentTime = ConvertFrom.SecondsToTime(PlaybackBarControl.Val);
+                    _audioFileReader.CurrentTime = ConvertFrom.SecondsToTime(PlaybackBarControl.Val);
             }
             else
                 PlaybackBarControl.Val = 0;
@@ -418,30 +417,30 @@ namespace Melodify
 
         private void TrackBarVolumeState_Scroll(object sender, EventArgs e)
         {
-            if (AudioFileReader != null)
-                AudioFileReader.Volume = TrackBarVolumeState.Value / 10f;
+            if (_audioFileReader != null)
+                _audioFileReader.Volume = TrackBarVolumeState.Value / 10f;
             else
                 TrackBarVolumeState.Value = 10;
         }
 
         private void AppTimer_Tick(object sender, EventArgs e)
         {
-            if (AudioFileReader != null)
+            if (_audioFileReader != null)
             {
                 //  Change the Label Text to the Music current Time
-                LabelMusicCurrentTimeState.Text = AudioFileReader.CurrentTime.ToString(@"mm\:ss");
+                LabelMusicCurrentTimeState.Text = _audioFileReader.CurrentTime.ToString(@"mm\:ss");
 
                 //  Change the PlaybackBarControl value to the Music current Time
-                PlaybackBarControl.Val = Convert.ToInt32(ConvertFrom.TimeToSeconds(AudioFileReader.CurrentTime));
+                PlaybackBarControl.Val = Convert.ToInt32(ConvertFrom.TimeToSeconds(_audioFileReader.CurrentTime));
 
                 //  Check if the Music end, then start the Next one or repeat it
                 if (LabelMusicCurrentTimeState.Text == LabelMusicEndTime.Text)
                 {
-                    if (LoopState == LoopState.One)
-                        AudioFileReader.Position = 0;
-                    else if (LoopState == LoopState.Off || LoopState == LoopState.All)
+                    if (_loopState == LoopState.One)
+                        _audioFileReader.Position = 0;
+                    else if (_loopState == LoopState.Off || _loopState == LoopState.All)
                     {
-                        MusicState = MusicState.Pause;
+                        _musicState = MusicState.Pause;
                         ButtonPlayPause.BackgroundImage = Properties.Resources.Play;
                         PlayAndPauseToolStripMenuItem.Text = "Play";
 
@@ -471,7 +470,7 @@ namespace Melodify
                 if (musicPanel.BackColor == Color.FromArgb(28, 28, 28))
                 {
                     //  if the removed MusicPanel is the Playong Music, Start the next one
-                    if (musicPanel.MusicPath == Music[CurrentPlayingMusicIndex])
+                    if (musicPanel.MusicPath == Music[_currentPlayingMusicIndex])
                         ButtonNext.PerformClick();
 
                     Music.Remove(musicPanel.MusicPath);
@@ -489,7 +488,7 @@ namespace Melodify
             {
                 if (this.Text == (TagFile.GetArtists(Music[i]) + " - " + TagFile.GetTitle(Music[i])))
                 {
-                    CurrentPlayingMusicIndex = i;
+                    _currentPlayingMusicIndex = i;
                     break;
                 }
             }
@@ -513,11 +512,11 @@ namespace Melodify
         {
             if (Music.Count != 0)
             {
-                LyricsForm LyricsForm = new LyricsForm(Music[CurrentPlayingMusicIndex])
+                LyricsForm lyricsForm = new LyricsForm(Music[_currentPlayingMusicIndex])
                 {
                     Icon = this.Icon
                 };
-                LyricsForm.Show();
+                lyricsForm.Show();
             }
         }
 
@@ -529,11 +528,11 @@ namespace Melodify
                 {
                     if (FlowLayoutPanelMusic.Controls[i].BackColor == Color.FromArgb(28, 28, 28))
                     {
-                        LyricsForm LyricsForm = new LyricsForm(Music[i])
+                        LyricsForm lyricsForm = new LyricsForm(Music[i])
                         {
                             Icon = this.Icon
                         };
-                        LyricsForm.Show();
+                        lyricsForm.Show();
                         break;
                     }
                 }
@@ -548,11 +547,11 @@ namespace Melodify
                 {
                     if (FlowLayoutPanelMusic.Controls[i].BackColor == Color.FromArgb(28, 28, 28))
                     {
-                        EditForm EditForm = new EditForm(i)
+                        EditForm editForm = new EditForm(i)
                         {
                             Icon = this.Icon
                         };
-                        EditForm.Show();
+                        editForm.Show();
                         break;
                     }
                 }
@@ -562,15 +561,15 @@ namespace Melodify
         private void SortByTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //  I use the OrderBy function and the Linq, to sort the list on the title
-            List<string> SortedList = Music.OrderBy(o => TagFile.GetTitle(o)).ToList();
+            List<string> sortedList = Music.OrderBy(o => TagFile.GetTitle(o)).ToList();
 
             // Clear the Lists and initialize the index and waveoutevent to null
             ClearListToolStripMenuItem.PerformClick();
 
             //  Initialize the list and Play the first music
-            AddItemsInListToTheMainList(SortedList);
+            AddItemsInListToTheMainList(sortedList);
 
-            LastSortedMethode = SortedMethode.Title;
+            _lastSortedMethod = SortedMethod.Title;
 
             SortByTitleToolContextMenuStriItem.Checked = true;
             SortByArtistToolContextMenuStriItem.Checked = false;
@@ -583,7 +582,7 @@ namespace Melodify
 
         private void SortByArtistToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var SortedList = Music.OrderBy(x => TagFile.GetArtists(x)).ThenBy(x => TagFile.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
+            var sortedList = Music.OrderBy(x => TagFile.GetArtists(x)).ThenBy(x => TagFile.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
             // The only reason make me keep All this Code bellow on comment, is that i found a better and small way to do it (The Line upove)
             #region The Comment Code
             /*  //  I use the OrderBy function and the Linq, to sort the list on the Album
@@ -623,9 +622,9 @@ namespace Melodify
             ClearListToolStripMenuItem.PerformClick();
 
             //  Initialize the list and Play the first music
-            AddItemsInListToTheMainList(SortedList);
+            AddItemsInListToTheMainList(sortedList);
 
-            LastSortedMethode = SortedMethode.Artist;
+            _lastSortedMethod = SortedMethod.Artist;
 
             SortByArtistToolContextMenuStriItem.Checked = true;
             SortByTitleToolContextMenuStriItem.Checked = false;
@@ -639,15 +638,15 @@ namespace Melodify
         private void SortByAlbumToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //  Sort thelist by the Album then the Track Number
-            var SortedList = Music.OrderBy(x => TagFile.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
+            var sortedList = Music.OrderBy(x => TagFile.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
 
             // Clear the Lists and initialize the index and waveoutevent to null
             ClearListToolStripMenuItem.PerformClick();
 
             //  Initialize the list and Play the first music
-            AddItemsInListToTheMainList(SortedList);
+            AddItemsInListToTheMainList(sortedList);
 
-            LastSortedMethode = SortedMethode.Album;
+            _lastSortedMethod = SortedMethod.Album;
 
             SortByAlbumToolContextMenuStriItem.Checked = true;
             SortByTitleToolContextMenuStriItem.Checked = false;
@@ -662,15 +661,15 @@ namespace Melodify
         {
             AppTimer.Stop();
 
-            if (WaveOutEvent != null)
+            if (_waveOutEvent != null)
             {
-                WaveOutEvent.Dispose();
-                WaveOutEvent = null;
+                _waveOutEvent.Dispose();
+                _waveOutEvent = null;
             }
-            if (AudioFileReader != null)
+            if (_audioFileReader != null)
             {
-                AudioFileReader.Dispose();
-                AudioFileReader = null;
+                _audioFileReader.Dispose();
+                _audioFileReader = null;
             }
 
             FlowLayoutPanelMusic.Controls.Clear();
@@ -679,13 +678,13 @@ namespace Melodify
             LabelMusicCurrentTimeState.Text = "--:--";
             LabelMusicEndTime.Text = "--:--";
 
-            CurrentPlayingMusicIndex = 0;
+            _currentPlayingMusicIndex = 0;
             PlaybackBarControl.Val = 0;
 
             PictureBoxMusicCover.BackgroundImage = Properties.Resources.MusicTon;
             ButtonPlayPause.BackgroundImage = Properties.Resources.Play;
             PlayAndPauseToolStripMenuItem.Text = "Play";
-            MusicState = MusicState.Pause;
+            _musicState = MusicState.Pause;
 
             this.Text = "MusicPlayer";
         }
@@ -695,9 +694,9 @@ namespace Melodify
             e.Effect = DragDropEffects.All;
 
             //  Allow only the Audio Files and the folders
-            foreach (string FilePath in (string[])e.Data.GetData(DataFormats.FileDrop))
+            foreach (string filePath in (string[])e.Data.GetData(DataFormats.FileDrop))
             {
-                if (!FileIsAudio(FilePath))
+                if (!FileIsAudio(filePath))
                 {
                     e.Effect = DragDropEffects.None;
                     break;
@@ -707,25 +706,25 @@ namespace Melodify
 
         private void MusicPlayer_DragDrop(object sender, DragEventArgs e)
         {
-            List<string> OnlyAudioFiles = new List<string>();
+            List<string> onlyAudioFiles = new List<string>();
 
-            foreach (string FilePath in (string[])e.Data.GetData(DataFormats.FileDrop))
+            foreach (string filePath in (string[])e.Data.GetData(DataFormats.FileDrop))
             {
                 //  Add only the Audio file to the List
-                if (FileIsAudio(FilePath))
-                    OnlyAudioFiles.Add(FilePath);
-                else if (Directory.Exists(FilePath))
+                if (FileIsAudio(filePath))
+                    onlyAudioFiles.Add(filePath);
+                else if (Directory.Exists(filePath))
                 {
                     //  Filter the Folder and Add only the Audio file to the List
-                    var AllFilesPath = Directory.EnumerateFiles(FilePath, "*.*", SearchOption.AllDirectories);
+                    var allFilesPath = Directory.EnumerateFiles(filePath, "*.*", SearchOption.AllDirectories);
 
-                    foreach (var FilePathInList in AllFilesPath)
-                        if (FileIsAudio(FilePathInList))
-                            OnlyAudioFiles.Add(FilePathInList);
+                    foreach (var filePathInList in allFilesPath)
+                        if (FileIsAudio(filePathInList))
+                            onlyAudioFiles.Add(filePathInList);
                 }
             }
 
-            AddItemsInListToTheMainList(OnlyAudioFiles);
+            AddItemsInListToTheMainList(onlyAudioFiles);
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)

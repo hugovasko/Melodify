@@ -35,7 +35,7 @@
             PanelControls = new System.Windows.Forms.Panel();
             PlaybackBarControl = new PlaybackBarControl();
             TrackBarVolumeState = new System.Windows.Forms.TrackBar();
-            ButtonPrevieus = new System.Windows.Forms.Button();
+            ButtonPrevious = new System.Windows.Forms.Button();
             ButtonShuffle = new System.Windows.Forms.Button();
             ButtonLoop = new System.Windows.Forms.Button();
             ButtonNext = new System.Windows.Forms.Button();
@@ -50,7 +50,7 @@
             EditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             PlayAndPauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             NextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            PrevieusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            PreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             EditSongToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             SortByToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,7 +120,7 @@
             PanelControls.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             PanelControls.Controls.Add(PlaybackBarControl);
             PanelControls.Controls.Add(TrackBarVolumeState);
-            PanelControls.Controls.Add(ButtonPrevieus);
+            PanelControls.Controls.Add(ButtonPrevious);
             PanelControls.Controls.Add(LabelMusicEndTime);
             PanelControls.Controls.Add(LabelMusicCurrentTimeState);
             PanelControls.Controls.Add(ButtonShuffle);
@@ -163,23 +163,23 @@
             TrackBarVolumeState.Value = 5;
             TrackBarVolumeState.Scroll += TrackBarVolumeState_Scroll;
             // 
-            // ButtonPrevieus
+            // ButtonPrevious
             // 
-            ButtonPrevieus.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            ButtonPrevieus.BackColor = System.Drawing.Color.Black;
-            ButtonPrevieus.BackgroundImage = Properties.Resources.Previous;
-            ButtonPrevieus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            ButtonPrevieus.Cursor = System.Windows.Forms.Cursors.Hand;
-            ButtonPrevieus.FlatAppearance.BorderSize = 0;
-            ButtonPrevieus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            ButtonPrevieus.Location = new System.Drawing.Point(13, 10);
-            ButtonPrevieus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            ButtonPrevieus.Name = "ButtonPrevieus";
-            ButtonPrevieus.Size = new System.Drawing.Size(35, 29);
-            ButtonPrevieus.TabIndex = 0;
-            ButtonPrevieus.TabStop = false;
-            ButtonPrevieus.UseVisualStyleBackColor = false;
-            ButtonPrevieus.Click += ButtonPrevieus_Click;
+            ButtonPrevious.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            ButtonPrevious.BackColor = System.Drawing.Color.Black;
+            ButtonPrevious.BackgroundImage = Properties.Resources.Previous;
+            ButtonPrevious.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            ButtonPrevious.Cursor = System.Windows.Forms.Cursors.Hand;
+            ButtonPrevious.FlatAppearance.BorderSize = 0;
+            ButtonPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            ButtonPrevious.Location = new System.Drawing.Point(13, 10);
+            ButtonPrevious.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            ButtonPrevious.Name = "ButtonPrevious";
+            ButtonPrevious.Size = new System.Drawing.Size(35, 29);
+            ButtonPrevious.TabIndex = 0;
+            ButtonPrevious.TabStop = false;
+            ButtonPrevious.UseVisualStyleBackColor = false;
+            ButtonPrevious.Click += ButtonPreviousClick;
             // 
             // ButtonShuffle
             // 
@@ -320,7 +320,7 @@
             // 
             // EditToolStripMenuItem
             // 
-            EditToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { PlayAndPauseToolStripMenuItem, NextToolStripMenuItem, PrevieusToolStripMenuItem, toolStripSeparator3, EditSongToolStripMenuItem, SortByToolStripMenuItem, toolStripSeparator4, ShuffleToolStripMenuItem, LoopModeToolStripMenuItem });
+            EditToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { PlayAndPauseToolStripMenuItem, NextToolStripMenuItem, PreviousToolStripMenuItem, toolStripSeparator3, EditSongToolStripMenuItem, SortByToolStripMenuItem, toolStripSeparator4, ShuffleToolStripMenuItem, LoopModeToolStripMenuItem });
             EditToolStripMenuItem.Name = "EditToolStripMenuItem";
             EditToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             EditToolStripMenuItem.Text = "&Edit";
@@ -328,7 +328,7 @@
             // PlayAndPauseToolStripMenuItem
             // 
             PlayAndPauseToolStripMenuItem.Name = "PlayAndPauseToolStripMenuItem";
-            PlayAndPauseToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            PlayAndPauseToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             PlayAndPauseToolStripMenuItem.Text = "Play";
             PlayAndPauseToolStripMenuItem.Click += ButtonPlayPause_Click;
             // 
@@ -336,27 +336,27 @@
             // 
             NextToolStripMenuItem.Name = "NextToolStripMenuItem";
             NextToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N;
-            NextToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            NextToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             NextToolStripMenuItem.Text = "&Next";
             NextToolStripMenuItem.Click += ButtonNext_Click;
             // 
-            // PrevieusToolStripMenuItem
+            // PreviousToolStripMenuItem
             // 
-            PrevieusToolStripMenuItem.Name = "PrevieusToolStripMenuItem";
-            PrevieusToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P;
-            PrevieusToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            PrevieusToolStripMenuItem.Text = "&Previeus";
-            PrevieusToolStripMenuItem.Click += ButtonPrevieus_Click;
+            PreviousToolStripMenuItem.Name = "PreviousToolStripMenuItem";
+            PreviousToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P;
+            PreviousToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            PreviousToolStripMenuItem.Text = "&Previous";
+            PreviousToolStripMenuItem.Click += ButtonPreviousClick;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new System.Drawing.Size(156, 6);
+            toolStripSeparator3.Size = new System.Drawing.Size(157, 6);
             // 
             // EditSongToolStripMenuItem
             // 
             EditSongToolStripMenuItem.Name = "EditSongToolStripMenuItem";
-            EditSongToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            EditSongToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             EditSongToolStripMenuItem.Text = "Edit Song";
             EditSongToolStripMenuItem.Click += EditToolStripMenuItem_Click;
             // 
@@ -364,7 +364,7 @@
             // 
             SortByToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { TitleToolStripMenuItem, ArtistToolStripMenuItem, AlbumToolStripMenuItem });
             SortByToolStripMenuItem.Name = "SortByToolStripMenuItem";
-            SortByToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            SortByToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             SortByToolStripMenuItem.Text = "Sort by:";
             // 
             // TitleToolStripMenuItem
@@ -391,12 +391,12 @@
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new System.Drawing.Size(156, 6);
+            toolStripSeparator4.Size = new System.Drawing.Size(157, 6);
             // 
             // ShuffleToolStripMenuItem
             // 
             ShuffleToolStripMenuItem.Name = "ShuffleToolStripMenuItem";
-            ShuffleToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            ShuffleToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             ShuffleToolStripMenuItem.Text = "Shuffle Play";
             ShuffleToolStripMenuItem.Click += ButtonShuffle_Click;
             // 
@@ -404,7 +404,7 @@
             // 
             LoopModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { LoopModeOneToolStripMenuItem, LoopModeAllToolStripMenuItem, LoopModeOffToolStripMenuItem });
             LoopModeToolStripMenuItem.Name = "LoopModeToolStripMenuItem";
-            LoopModeToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            LoopModeToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             LoopModeToolStripMenuItem.Text = "Loop Mode";
             // 
             // LoopModeOneToolStripMenuItem
@@ -614,7 +614,7 @@
 
         private System.Windows.Forms.Panel PictureBoxMusicCover;
         private System.Windows.Forms.Button ButtonPlayPause;
-        private System.Windows.Forms.Button ButtonPrevieus;
+        private System.Windows.Forms.Button ButtonPrevious;
         private System.Windows.Forms.Button ButtonShowAndHideList;
         private System.Windows.Forms.Button ButtonNext;
         private System.Windows.Forms.Button ButtonLoop;
@@ -631,7 +631,7 @@
         private System.Windows.Forms.ToolStripMenuItem EditToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem PlayAndPauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem NextToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem PrevieusToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PreviousToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem ShuffleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem LoopModeToolStripMenuItem;

@@ -6,24 +6,24 @@ namespace Melodify
 {
     public partial class LyricsForm : Form
     {
-        private string MusicPath;
+        private readonly string _musicPath;
 
         public LyricsForm()
         {
             InitializeComponent();
         }
 
-        public LyricsForm(string MusicPath)
+        public LyricsForm(string musicPath)
         {
             InitializeComponent();
 
-            this.MusicPath = MusicPath;
+            _musicPath = musicPath;
         }
 
         private void LyricsForm_Load(object sender, EventArgs e)
         {
-            RichTextBoxLyrics.Text = TagFile.GetLyrics(MusicPath);
-            this.Text = TagFile.GetArtists(MusicPath) + " - " + TagFile.GetTitle(MusicPath) + " :Lyrics:";
+            RichTextBoxLyrics.Text = TagFile.GetLyrics(_musicPath);
+            Text = TagFile.GetArtists(_musicPath) + @" - " + TagFile.GetTitle(_musicPath) + @" :Lyrics:";
 
             RichTextBoxLyrics.SelectAll();
             RichTextBoxLyrics.SelectionAlignment = HorizontalAlignment.Center;
@@ -31,7 +31,7 @@ namespace Melodify
 
         private void ButtonClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
     }

@@ -2,34 +2,34 @@
 using System;
 using System.Drawing;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Windows.Forms;
 using Melodify.Classes;
+using System.Threading.Tasks;
 
 namespace Melodify
 {
     public partial class EditForm : Form
     {
-        private static readonly HttpClient Client = new HttpClient { BaseAddress = new Uri("https://api.genius.com") };
-        private int CurrentPlayingMusicIndex;
-        private Size EditFormSize = new Size(611, 535);
-        private Size SearchFormSize = new Size(438, 535);
+        private static readonly HttpClient Client = new() { BaseAddress = new Uri("https://api.genius.com") };
+        private int _currentPlayingMusicIndex;
+        private readonly Size _editFormSize = new(611, 535);
+        private readonly Size _searchFormSize = new(438, 535);
 
         public EditForm()
         {
             InitializeComponent();
         }
 
-        public EditForm(int CurrentPlayingMusicIndex)
+        public EditForm(int currentPlayingMusicIndex)
         {
             InitializeComponent();
-            this.Size = EditFormSize;
+            this.Size = _editFormSize;
 
-            this.CurrentPlayingMusicIndex = CurrentPlayingMusicIndex;
+            this._currentPlayingMusicIndex = currentPlayingMusicIndex;
 
-            EditFormInitialise(CurrentPlayingMusicIndex);
+            EditFormInitialise(currentPlayingMusicIndex);
         }
 
         private void EditForm_Load(object sender, EventArgs e)
@@ -37,37 +37,37 @@ namespace Melodify
 
         }
 
-        private void EditFormInitialise(int Index)
+        private void EditFormInitialise(int index)
         {
             TextBoxGenre.AutoCompleteCustomSource.AddRange(TagLib.Genres.Audio);
 
-            string TrackPath = MainForm.Music[Index];
-            TextBoxTitle.Text = TagFile.GetTitle(TrackPath);
-            TextBoxArtists.Text = TagFile.GetArtists(TrackPath);
-            TextBoxAlbum.Text = TagFile.GetAlbum(TrackPath);
-            TextBoxTrack.Text = TagFile.GetTrack(TrackPath);
-            TextBoxTrackCount.Text = TagFile.GetTrackCount(TrackPath);
-            TextBoxGenre.Text = TagFile.GetGenre(TrackPath);
-            RichTextBoxLyrics.Text = TagFile.GetLyrics(TrackPath);
-            PictureBoxCover.Image = TagFile.GetCover(TrackPath);
-            TextBoxYear.Text = TagFile.GetYear(TrackPath);
+            var trackPath = MainForm.Music[index];
+            TextBoxTitle.Text = TagFile.GetTitle(trackPath);
+            TextBoxArtists.Text = TagFile.GetArtists(trackPath);
+            TextBoxAlbum.Text = TagFile.GetAlbum(trackPath);
+            TextBoxTrack.Text = TagFile.GetTrack(trackPath);
+            TextBoxTrackCount.Text = TagFile.GetTrackCount(trackPath);
+            TextBoxGenre.Text = TagFile.GetGenre(trackPath);
+            RichTextBoxLyrics.Text = TagFile.GetLyrics(trackPath);
+            PictureBoxCover.Image = TagFile.GetCover(trackPath);
+            TextBoxYear.Text = TagFile.GetYear(trackPath);
 
             this.Text = TextBoxTitle.Text;
         }
 
         private void ButtonChooseCover_Click(object sender, EventArgs e)
         {
-            OpenFileDialog OFD = new OpenFileDialog
+            var ofd = new OpenFileDialog
             {
                 Multiselect = false,
-                Filter = "Image Files|*.png; *.jpg *.jpeg | All files |*.*"
+                Filter = @"Image Files|*.png; *.jpg *.jpeg | All files |*.*"
             };
 
-            if (OFD.ShowDialog() == DialogResult.OK)
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
-                if (OFD.FileName.EndsWith(".png") || OFD.FileName.EndsWith(".jpg") || OFD.FileName.EndsWith(".jpeg"))
+                if (ofd.FileName.EndsWith(".png") || ofd.FileName.EndsWith(".jpg") || ofd.FileName.EndsWith(".jpeg"))
                 {
-                    PictureBoxCover.Image = new Bitmap(OFD.FileName);
+                    PictureBoxCover.Image = new Bitmap(ofd.FileName);
                     PictureBoxCover.Tag = "Ok";
                 }
             }
@@ -77,23 +77,23 @@ namespace Melodify
         {
             try
             {
-                if (TextBoxTitle.Tag.ToString() == "Ok")
+                if (TextBoxTitle.Tag?.ToString() == "Ok")
                 {
-                    TagFile.SetTitle(MainForm.Music[CurrentPlayingMusicIndex], TextBoxTitle.Text);
+                    TagFile.SetTitle(MainForm.Music[_currentPlayingMusicIndex], TextBoxTitle.Text);
                     TextBoxTitle.Tag = "";
                 }
 
-                if (TextBoxArtists.Tag.ToString() == "Ok")
+                if (TextBoxArtists.Tag?.ToString() == "Ok")
                 {
-                    TagFile.SetArtists(MainForm.Music[CurrentPlayingMusicIndex], TextBoxArtists.Text);
+                    TagFile.SetArtists(MainForm.Music[_currentPlayingMusicIndex], TextBoxArtists.Text);
                     TextBoxArtists.Tag = "";
                 }
 
                 try
                 {
-                    if (TextBoxAlbum.Tag.ToString() == "Ok")
+                    if (TextBoxAlbum.Tag?.ToString() == "Ok")
                     {
-                        TagFile.SetAlbum(MainForm.Music[CurrentPlayingMusicIndex], TextBoxAlbum.Text);
+                        TagFile.SetAlbum(MainForm.Music[_currentPlayingMusicIndex], TextBoxAlbum.Text);
                         TextBoxAlbum.Tag = "";
                     }
                 }
@@ -101,33 +101,33 @@ namespace Melodify
                 {
                     //  Add Code later
                 }
-                catch (Exception Exc)
+                catch (Exception exc)
                 {
-                    MessageBox.Show(Exc.ToString(), "====:TextBoxAlbum:====");
-                    MessageBox.Show(Exc.GetType().ToString(), "====:TextBoxAlbum:====");
+                    MessageBox.Show(exc.ToString(), @"====:TextBoxAlbum:====");
+                    MessageBox.Show(exc.GetType().ToString(), @"====:TextBoxAlbum:====");
                 }
 
-                if (TextBoxTrack.Tag.ToString() == "Ok")
+                if (TextBoxTrack.Tag?.ToString() == "Ok")
                 {
-                    TagFile.SetTrackN(MainForm.Music[CurrentPlayingMusicIndex], TextBoxTrack.Text);
+                    TagFile.SetTrackN(MainForm.Music[_currentPlayingMusicIndex], TextBoxTrack.Text);
                     TextBoxTrack.Tag = "";
                 }
 
-                if (TextBoxTrackCount.Tag.ToString() == "Ok")
+                if (TextBoxTrackCount.Tag?.ToString() == "Ok")
                 {
-                    TagFile.SetTrackCount(MainForm.Music[CurrentPlayingMusicIndex], TextBoxTrackCount.Text);
+                    TagFile.SetTrackCount(MainForm.Music[_currentPlayingMusicIndex], TextBoxTrackCount.Text);
                     TextBoxTrackCount.Tag = "";
                 }
 
-                if (TextBoxYear.Tag.ToString() == "Ok")
+                if (TextBoxYear.Tag?.ToString() == "Ok")
                 {
-                    TagFile.SetYear(MainForm.Music[CurrentPlayingMusicIndex], TextBoxYear.Text);
+                    TagFile.SetYear(MainForm.Music[_currentPlayingMusicIndex], TextBoxYear.Text);
                     TextBoxYear.Tag = "";
                 }
 
                 if (TextBoxGenre.Tag.ToString() == "Ok")
                 {
-                    TagFile.SetGenre(MainForm.Music[CurrentPlayingMusicIndex], TextBoxGenre.Text);
+                    TagFile.SetGenre(MainForm.Music[_currentPlayingMusicIndex], TextBoxGenre.Text);
                     TextBoxGenre.Tag = "";
                 }
 
@@ -135,7 +135,7 @@ namespace Melodify
                 {
                     if (PictureBoxCover.Tag.ToString() == "Ok")
                     {
-                        TagFile.SetCover(MainForm.Music[CurrentPlayingMusicIndex], PictureBoxCover.Image);
+                        TagFile.SetCover(MainForm.Music[_currentPlayingMusicIndex], PictureBoxCover.Image);
                         PictureBoxCover.Tag = "";
                     }
                 }
@@ -143,21 +143,21 @@ namespace Melodify
                 {
                     //  Add Code later
                 }
-                catch (Exception Exc)
+                catch (Exception exc)
                 {
-                    MessageBox.Show(Exc.ToString(), "====:PictureBoxCover:====");
-                    MessageBox.Show(Exc.GetType().ToString(), "====:PictureBoxCover:====");
+                    MessageBox.Show(exc.ToString(), @"====:PictureBoxCover:====");
+                    MessageBox.Show(exc.GetType().ToString(), @"====:PictureBoxCover:====");
                 }
 
-                TagFile.SetLyrics(MainForm.Music[CurrentPlayingMusicIndex], RichTextBoxLyrics.Text);
+                TagFile.SetLyrics(MainForm.Music[_currentPlayingMusicIndex], RichTextBoxLyrics.Text);
 
-                MessageBox.Show("All Tags Saved");
+                MessageBox.Show(@"All Tags Saved");
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "====:Save:====");
-                MessageBox.Show(ex.GetType().ToString(), "====:Save:====");
+                MessageBox.Show(ex.ToString(), @"====:Save:====");
+                MessageBox.Show(ex.GetType().ToString(), @"====:Save:====");
             }
         }
 
@@ -166,16 +166,16 @@ namespace Melodify
             this.Close();
         }
 
-        private void ButtonPrevieus_Click(object sender, EventArgs e)
+        private void ButtonPrevious_Click(object sender, EventArgs e)
         {
-            if (CurrentPlayingMusicIndex != 0)
-                EditFormInitialise(--CurrentPlayingMusicIndex);
+            if (_currentPlayingMusicIndex != 0)
+                EditFormInitialise(--_currentPlayingMusicIndex);
         }
 
         private void ButtonNext_Click(object sender, EventArgs e)
         {
-            if (CurrentPlayingMusicIndex != MainForm.Music.Count - 1)
-                EditFormInitialise(++CurrentPlayingMusicIndex);
+            if (_currentPlayingMusicIndex != MainForm.Music.Count - 1)
+                EditFormInitialise(++_currentPlayingMusicIndex);
         }
 
         private void RadioButtonRTL_CheckedChanged(object sender, EventArgs e)
@@ -192,7 +192,7 @@ namespace Melodify
 
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
-            (sender as TextBox).Tag = "Ok";
+            ((TextBox)sender).Tag = "Ok";
         }
 
         private void ButtonAuto_Click(object sender, EventArgs e)
@@ -200,17 +200,17 @@ namespace Melodify
             SearchTextBox.Text = TextBoxTitle.Text;
 
             if (TextBoxArtists.Text != "")
-                SearchTextBox.Text += " - " + TextBoxArtists.Text;
+                SearchTextBox.Text += @" - " + TextBoxArtists.Text;
 
             AlertTheFlowLayoutPanelSongs();
         }
 
-        void AlertTheFlowLayoutPanelSongs()
+        private void AlertTheFlowLayoutPanelSongs()
         {
             EditPanel.Visible = false;
             SearchPanel.Visible = true;
             SearchPanel.Location = new Point(4, 8);
-            this.Size = SearchFormSize;
+            this.Size = _searchFormSize;
 
             SearchButton.PerformClick();
         }
@@ -225,25 +225,25 @@ namespace Melodify
 
                 var response = await Client.GetAsync("search?q=" + SearchTextBox.Text);
                 string value = await response.Content.ReadAsStringAsync();
-                dynamic Answer = JsonConvert.DeserializeObject(value);
+                dynamic answer = JsonConvert.DeserializeObject(value);
 
                 try
                 {
                     for (int i = 0; i < 4;)
                     {
-                        if (Answer.response.hits[i].type == "song")
+                        if (answer.response.hits[i].type == "song")
                         {
-                            int id = Answer.response.hits[i].result.id;
-                            string url = Answer.response.hits[i].result.song_art_image_thumbnail_url;
-                            Bitmap Cover = GetImage(url);
+                            int id = answer.response.hits[i].result.id;
+                            string url = answer.response.hits[i].result.song_art_image_thumbnail_url;
+                            var cover = await GetImageAsync(url);
 
-                            if (Cover == null)
-                                Cover = (Bitmap)new PictureBox().Image;
+                            if (cover == null)
+                                cover = (Bitmap)new PictureBox().Image;
 
-                            string Title = Answer.response.hits[i].result.title_with_featured;
-                            string Artist = Answer.response.hits[i].result.primary_artist.name;
+                            string title = answer.response.hits[i].result.title_with_featured;
+                            string artist = answer.response.hits[i].result.primary_artist.name;
 
-                            FlowLayoutPanelSong.Controls.Add(CreateSongCard(id, Cover, Title, Artist));
+                            FlowLayoutPanelSong.Controls.Add(CreateSongCard(id, cover, title, artist));
                             i++;
                         }
                         else
@@ -256,67 +256,75 @@ namespace Melodify
                 {
                     //  Add Code Later
                 }
-                catch (Exception Exc)
+                catch (Exception exc)
                 {
-                    MessageBox.Show(Exc.ToString(), "===:Answer Response Hits:===");
-                    MessageBox.Show(Exc.GetType().ToString());
+                    MessageBox.Show(exc.ToString(), @"===:Answer Response Hits:===");
+                    MessageBox.Show(exc.GetType().ToString());
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "===:Search Button Click -Answer-:===");
+                MessageBox.Show(ex.ToString(), @"===:Search Button Click -Answer-:===");
                 MessageBox.Show(ex.GetType().ToString());
             }
 
         }
 
-        private Bitmap GetImage(string Url)
+        private static async Task<Bitmap> GetImageAsync(string url)
         {
             try
             {
-                WebRequest request = WebRequest.Create(Url);
-                Stream responseStream = request.GetResponse().GetResponseStream();
-                return new Bitmap(responseStream);
+                using (var client = new HttpClient())
+                {
+                    using (var response = await client.GetAsync(url))
+                    {
+                        using (var responseStream = await response.Content.ReadAsStreamAsync())
+                        {
+                            return new Bitmap(responseStream);
+                        }
+                    }
+                }
             }
-            catch (WebException WebExc)
+            catch (HttpRequestException httpExc)
             {
-                DialogResult result = MessageBox.Show(WebExc.Message + "\nWould you like to try Get the image again??", "Web Exception!!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                var result = MessageBox.Show(httpExc.Message + "\nWould you like to try Get the image again??", "HTTP Request Exception!!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
 
                 if (result == DialogResult.Yes)
-                    return GetImage(Url);
+                    return await GetImageAsync(url);
                 else
                     return null;
             }
-            catch (ArgumentException AExc)
+            catch (ArgumentException argExc)
             {
-                //  Add code later
-                MessageBox.Show(AExc.ToString(), "===:GetImage ArgumentException:===");
+                // Add code later
+                MessageBox.Show(argExc.ToString(), @"===:GetImage ArgumentException:===");
                 return null;
             }
-            catch (Exception Exc)
+            catch (Exception exc)
             {
-                MessageBox.Show(Exc.ToString(), "===:Get Image:===");
-                MessageBox.Show(Exc.GetType().ToString());
+                MessageBox.Show(exc.ToString(), @"===:Get Image:===");
+                MessageBox.Show(exc.GetType().ToString());
 
                 return null;
             }
         }
 
-        Panel CreateSongCard(int Id, Bitmap Cover, string Title, string Artist)
+
+        private Panel CreateSongCard(int id, Image cover, string title, string artist)
         {
-            Panel SongContainerPanel = new Panel()
+            var songContainerPanel = new Panel()
             {
                 BackColor = Color.FromArgb(18, 18, 18),
                 Size = new Size(194, 194)
             };
-            PictureBox SongCover = new PictureBox()
+            var songCover = new PictureBox()
             {
                 Location = new Point(47, 3),
                 Size = new Size(100, 100),
                 SizeMode = PictureBoxSizeMode.Zoom,
-                Image = Cover
+                Image = cover
             };
-            Label SongTitle = new Label()
+            var songTitle = new Label()
             {
                 Font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0),
                 Location = new Point(5, 106),
@@ -324,24 +332,24 @@ namespace Melodify
                 ForeColor = Color.White,
                 AutoSize = false,
                 TextAlign = ContentAlignment.TopCenter,
-                Text = Title
+                Text = title
             };
-            Label SongArtist = new Label()
+            var songArtist = new Label()
             {
                 ForeColor = Color.White,
                 Location = new Point(23, 153),
                 Size = new Size(148, 15),
                 TextAlign = ContentAlignment.TopCenter,
-                Text = Artist,
+                Text = artist,
                 AutoSize = false
             };
-            Panel SongPanelSepar = new Panel()
+            var songPanelSeparate = new Panel()
             {
                 BackColor = SystemColors.Control,
                 Location = new Point(24, 147),
                 Size = new Size(146, 2)
             };
-            Button SongThisOneButton = new Button()
+            var songThisOneButton = new Button()
             {
                 Location = new Point(47, 176),
                 Size = new Size(100, 20),
@@ -351,22 +359,22 @@ namespace Melodify
                 Cursor = Cursors.Hand,
                 FlatStyle = FlatStyle.Popup,
                 ForeColor = Color.White,
-                Tag = Id.ToString()
+                Tag = id.ToString()
             };
-            SongThisOneButton.Click += ThisSongCard_Click;
+            songThisOneButton.Click += ThisSongCard_Click;
 
-            SongContainerPanel.Controls.Add(SongCover);
-            SongContainerPanel.Controls.Add(SongTitle);
-            SongContainerPanel.Controls.Add(SongArtist);
-            SongContainerPanel.Controls.Add(SongPanelSepar);
-            SongContainerPanel.Controls.Add(SongThisOneButton);
+            songContainerPanel.Controls.Add(songCover);
+            songContainerPanel.Controls.Add(songTitle);
+            songContainerPanel.Controls.Add(songArtist);
+            songContainerPanel.Controls.Add(songPanelSeparate);
+            songContainerPanel.Controls.Add(songThisOneButton);
 
-            return SongContainerPanel;
+            return songContainerPanel;
         }
 
         private async void ThisSongCard_Click(object sender, EventArgs e)
         {
-            string id = (sender as Button).Tag.ToString();
+            var id = ((Button)sender).Tag?.ToString();
 
             try
             {
@@ -374,30 +382,30 @@ namespace Melodify
 
                 var response = await Client.GetAsync("songs/" + id);
                 var value = await response.Content.ReadAsStringAsync();
-                dynamic Answer = JsonConvert.DeserializeObject(value);
+                dynamic answer = JsonConvert.DeserializeObject(value);
 
-                string url = Answer.response.song.song_art_image_url;
-                Bitmap Cover = GetImage(url);
-                if (Cover != null)
+                string url = answer.response.song.song_art_image_url;
+                var cover = await GetImageAsync(url);
+                if (cover != null)
                 {
-                    PictureBoxCover.Image = Cover;
+                    PictureBoxCover.Image = cover;
                     PictureBoxCover.Tag = "Ok";
                 }
 
-                TextBoxTitle.Text = Answer.response.song.title_with_featured;
-                TextBoxArtists.Text = Answer.response.song.primary_artist.name;
+                TextBoxTitle.Text = answer.response.song.title_with_featured;
+                TextBoxArtists.Text = answer.response.song.primary_artist.name;
 
                 try
                 {
-                    TextBoxAlbum.Text = Answer.response.song.album.name;
+                    TextBoxAlbum.Text = answer.response.song.album.name;
                 }
                 catch
                 {
-                    TextBoxAlbum.Text = Answer.response.song.album;
+                    TextBoxAlbum.Text = answer.response.song.album;
                 }
 
-                DateTime ReleaseDate = Answer.response.song.release_date;
-                TextBoxYear.Text = ReleaseDate.Year.ToString();
+                DateTime releaseDate = answer.response.song.release_date;
+                TextBoxYear.Text = releaseDate.Year.ToString();
 
                 CancelButton.PerformClick();
 
@@ -408,7 +416,7 @@ namespace Melodify
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "===:ThisOne:===");
+                MessageBox.Show(ex.ToString(), @"===:ThisOne:===");
                 MessageBox.Show(ex.GetType().ToString());
             }
         }
@@ -420,7 +428,7 @@ namespace Melodify
 
             EditPanel.Visible = true;
             SearchPanel.Visible = false;
-            this.Size = EditFormSize;
+            this.Size = _editFormSize;
         }
 
         private void EditPanel_Paint(object sender, PaintEventArgs e)

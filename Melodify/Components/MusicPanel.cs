@@ -17,7 +17,7 @@ namespace Melodify.Components
             PanelInitialize();
 
             _musicTitle.Text = @"Music Title";
-            _musicCover.Image = Resources.MusicTon;
+            _musicCover.Image = Resources.Melodify;
         }
 
         public MusicPanel(string path)

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Melodify
+namespace Melodify.Components
 {
     public partial class PlaybackBarControl : UserControl
     {

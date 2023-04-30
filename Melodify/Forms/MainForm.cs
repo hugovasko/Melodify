@@ -1,5 +1,4 @@
-﻿using NAudio.Wave;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -8,8 +7,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Melodify.Classes;
 using Melodify.Components;
+using NAudio.Wave;
 
-namespace Melodify
+namespace Melodify.Forms
 {
     public partial class MainForm : Form
     {
@@ -674,7 +674,7 @@ namespace Melodify
             _currentPlayingMusicIndex = 0;
             PlaybackBarControl.Val = 0;
 
-            PictureBoxMusicCover.BackgroundImage = Properties.Resources.MusicTon;
+            PictureBoxMusicCover.BackgroundImage = Properties.Resources.Melodify;
             ButtonPlayPause.BackgroundImage = Properties.Resources.Play;
             PlayAndPauseToolStripMenuItem.Text = "Play";
             _musicState = MusicState.Pause;

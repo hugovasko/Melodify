@@ -139,7 +139,7 @@ namespace Melodify.Classes
             }
             catch
             {
-                return Resources.MusicTon;
+                return Resources.Melodify;
             }
         }
 

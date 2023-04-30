@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Melodify.Classes;
 
-namespace Melodify
+namespace Melodify.Forms
 {
     public partial class LyricsForm : Form
     {

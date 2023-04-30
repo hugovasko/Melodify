@@ -1,4 +1,4 @@
-﻿namespace Melodify
+﻿namespace Melodify.Forms
 {
     partial class AboutForm
     {
@@ -60,7 +60,7 @@
             // 
             // PictureBoxLogo
             // 
-            PictureBoxLogo.Image = Properties.Resources.MusicTon;
+            PictureBoxLogo.Image = Properties.Resources.Melodify;
             PictureBoxLogo.InitialImage = null;
             PictureBoxLogo.Location = new System.Drawing.Point(119, 14);
             PictureBoxLogo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

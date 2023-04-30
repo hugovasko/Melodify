@@ -68,7 +68,6 @@ namespace Melodify.Forms
             ViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ShowAndHideMusicListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ShowAndHideSongLyricsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             AppTimer = new System.Windows.Forms.Timer(components);
             MusicPanelContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
@@ -276,14 +275,14 @@ namespace Melodify.Forms
             // 
             // AppMenuStrip
             // 
-            AppMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { FileToolStripMenuItem, EditToolStripMenuItem, ViewToolStripMenuItem, HelpToolStripMenuItem });
+            AppMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { FileToolStripMenuItem, EditToolStripMenuItem, ViewToolStripMenuItem, AboutToolStripMenuItem });
             AppMenuStrip.Location = new System.Drawing.Point(0, 0);
             AppMenuStrip.Name = "AppMenuStrip";
             AppMenuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
             AppMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             AppMenuStrip.Size = new System.Drawing.Size(968, 24);
             AppMenuStrip.TabIndex = 20;
-            AppMenuStrip.Text = "menuStrip1";
+            AppMenuStrip.Text = "menuStrip";
             // 
             // FileToolStripMenuItem
             // 
@@ -440,32 +439,26 @@ namespace Melodify.Forms
             ViewToolStripMenuItem.Name = "ViewToolStripMenuItem";
             ViewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             ViewToolStripMenuItem.Text = "&View";
+            ViewToolStripMenuItem.Click += ViewToolStripMenuItem_Click;
             // 
             // ShowAndHideMusicListToolStripMenuItem
             // 
             ShowAndHideMusicListToolStripMenuItem.Name = "ShowAndHideMusicListToolStripMenuItem";
-            ShowAndHideMusicListToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            ShowAndHideMusicListToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             ShowAndHideMusicListToolStripMenuItem.Text = "Hide Music List";
             ShowAndHideMusicListToolStripMenuItem.Click += ShowAndHideMusicListToolStripMenuItem_Click;
             // 
             // ShowAndHideSongLyricsToolStripMenuItem
             // 
             ShowAndHideSongLyricsToolStripMenuItem.Name = "ShowAndHideSongLyricsToolStripMenuItem";
-            ShowAndHideSongLyricsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            ShowAndHideSongLyricsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             ShowAndHideSongLyricsToolStripMenuItem.Text = "Show Music Lyrics";
             ShowAndHideSongLyricsToolStripMenuItem.Click += ShowSongLyricsToolStripMenuItem_Click;
-            // 
-            // HelpToolStripMenuItem
-            // 
-            HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { AboutToolStripMenuItem });
-            HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
-            HelpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            HelpToolStripMenuItem.Text = "&Help";
             // 
             // AboutToolStripMenuItem
             // 
             AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            AboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            AboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             AboutToolStripMenuItem.Text = "About";
             AboutToolStripMenuItem.Click += AboutToolStripMenuItem_Click;
             // 
@@ -665,11 +658,10 @@ namespace Melodify.Forms
         private System.Windows.Forms.ToolStripMenuItem SortByTitleToolContextMenuStriItem;
         private System.Windows.Forms.ToolStripMenuItem SortByArtistToolContextMenuStriItem;
         private System.Windows.Forms.ToolStripMenuItem SortByAlbumToolContextMenuStriItem;
-        private System.Windows.Forms.ToolStripMenuItem HelpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem LoopModeOneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem LoopModeAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem LoopModeOffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ShowMusicLyricsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
     }
 }

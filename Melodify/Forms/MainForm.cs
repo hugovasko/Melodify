@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Melodify.Classes;
+using Melodify.Components;
 
 namespace Melodify
 {
@@ -81,7 +82,7 @@ namespace Melodify
 
         private void AddMusicToFlowLayoutPanel(string musicPath)
         {
-            MusicPanel musicPanel = new MusicPanel(musicPath);
+            var musicPanel = new MusicPanel(musicPath);
             musicPanel.DoubleClick += MusicPanel_DoubleClick;
             musicPanel.Click += MusicPanel_Click;
             musicPanel.MouseClick += MusicPanel_MouseClick;
@@ -90,7 +91,7 @@ namespace Melodify
 
         private void MusicPanel_DoubleClick(object sender, EventArgs e)
         {
-            MusicPanel clickedMusic = sender as MusicPanel;
+            var clickedMusic = sender as MusicPanel;
 
             for (int i = 0; i < FlowLayoutPanelMusic.Controls.Count; i++)
             {
@@ -108,7 +109,7 @@ namespace Melodify
 
         private void MusicPanel_Click(object sender, EventArgs e)
         {
-            MusicPanel clickedMusic = sender as MusicPanel;
+            var clickedMusic = sender as MusicPanel;
 
             foreach (MusicPanel musicPanel in FlowLayoutPanelMusic.Controls)
                 musicPanel.BackColor = Color.Transparent;
@@ -120,7 +121,7 @@ namespace Melodify
         {
             if (e.Button == MouseButtons.Right)
             {
-                MusicPanel clickedMusic = sender as MusicPanel;
+                var clickedMusic = sender as MusicPanel;
 
                 //  Change the Background color of the Clicked Music Panel, and reset the others background color
                 foreach (MusicPanel musicPanel in FlowLayoutPanelMusic.Controls)
@@ -128,7 +129,7 @@ namespace Melodify
                 clickedMusic.BackColor = Color.FromArgb(28, 28, 28);
 
                 //  Show the Context Menu Strip, on the Clicked Music Panel
-                Point pointLowerLeft = new Point(0, clickedMusic.Height);
+                var pointLowerLeft = new Point(0, clickedMusic.Height);
                 pointLowerLeft = clickedMusic.PointToScreen(pointLowerLeft);
                 this.MusicPanelContextMenuStrip.Show(pointLowerLeft);
             }
@@ -137,7 +138,7 @@ namespace Melodify
         private async void AddItemsInListToTheMainList(List<string> list)
         {
             //  Initialize the list and Play the first music
-            foreach (string item in list)
+            foreach (var item in list)
             {
                 if (FileIsAudio(item))
                 {
@@ -150,17 +151,7 @@ namespace Melodify
 
         private bool FileIsAudio(string audioFilePath)
         {
-            bool value = false;
-
-            foreach (string audioExtension in _audioExtensions)
-            {
-                if (audioFilePath.ToLower().EndsWith(audioExtension))
-                {
-                    value = true;
-                    break;
-                }
-            }
-            return value;
+            return _audioExtensions.Any(audioExtension => audioFilePath.ToLower().EndsWith(audioExtension));
         }
 
         private void MusicInitialize(string path)

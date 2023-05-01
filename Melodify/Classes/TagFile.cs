@@ -27,7 +27,8 @@ namespace Melodify.Classes
         {
             try
             {
-                return string.Join(",", File.Create(musicPath).Tag.AlbumArtists);
+                AudioMetadata metadata = AudioMetadataReader.ReadMetadata(musicPath);
+                return string.Join(",", metadata.Artists);
             }
             catch
             {
@@ -39,7 +40,8 @@ namespace Melodify.Classes
         {
             try
             {
-                return File.Create(musicPath).Tag.Album;
+                AudioMetadata metadata = AudioMetadataReader.ReadMetadata(musicPath);
+                return metadata.Album;
             }
             catch
             {
@@ -146,7 +148,15 @@ namespace Melodify.Classes
             }
         }
 
-
+        /*public static void SetTitle(string musicPath, string title)
+        {
+            var metadata = AudioMetadataReader.ReadMetadata(musicPath);
+            if (metadata != null)
+            {
+                metadata.Title = title;
+                AudioMetadataWriter.WriteMetadata(musicPath, metadata);
+            }
+        }*/
         public static void SetTitle(string musicPath, string title)
         {
             var track = File.Create(musicPath);

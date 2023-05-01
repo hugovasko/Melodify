@@ -119,7 +119,7 @@ namespace Melodify.Forms
                     TextBoxYear.Tag = "";
                 }
 
-                if (TextBoxGenre.Tag.ToString() == "Ok")
+                if (TextBoxGenre.Tag?.ToString() == "Ok")
                 {
                     TagFile.SetGenre(MainForm.Music[_currentPlayingMusicIndex], TextBoxGenre.Text);
                     TextBoxGenre.Tag = "";
@@ -127,7 +127,7 @@ namespace Melodify.Forms
 
                 try
                 {
-                    if (PictureBoxCover.Tag.ToString() == "Ok")
+                    if (PictureBoxCover.Tag?.ToString() == "Ok")
                     {
                         TagFile.SetCover(MainForm.Music[_currentPlayingMusicIndex], PictureBoxCover.Image);
                         PictureBoxCover.Tag = "";

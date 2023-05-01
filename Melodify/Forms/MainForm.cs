@@ -886,6 +886,9 @@ namespace Melodify.Forms
             RedoToolStripMenuItem.Enabled = redoStack.Count > 0;
         }
 
+        private void FileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

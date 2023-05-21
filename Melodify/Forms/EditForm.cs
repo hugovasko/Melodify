@@ -36,7 +36,7 @@ namespace Melodify.Forms
             TextBoxGenre.AutoCompleteCustomSource.AddRange(Genres.Audio);
 
             var trackPath = MainForm.Music[index];
-            TextBoxTitle.Text = TagFile.GetTitle(trackPath);
+            TextBoxTitle.Text = TagFile.GetTitle(trackPath).Data;
             TextBoxArtists.Text = TagFile.GetArtists(trackPath);
             TextBoxAlbum.Text = TagFile.GetAlbum(trackPath);
             TextBoxTrack.Text = TagFile.GetTrack(trackPath);

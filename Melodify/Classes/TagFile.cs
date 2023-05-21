@@ -11,24 +11,16 @@ namespace Melodify.Classes
 {
     internal class TagFile
     {
-        public static string GetTitle(string musicPath)
+        public static Title GetTitle(string musicPath)
         {
-            try
-            {
-                return File.Create(musicPath).Tag.Title;
-            }
-            catch
-            {
-                return "";
-            }
+            return new Title(musicPath);
         }
 
         public static string GetArtists(string musicPath)
         {
             try
             {
-                AudioMetadata metadata = AudioMetadataReader.ReadMetadata(musicPath);
-                return string.Join(",", metadata.Artists);
+                return string.Join(",", File.Create(musicPath).Tag.AlbumArtists);
             }
             catch
             {

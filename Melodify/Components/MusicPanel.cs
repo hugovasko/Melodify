@@ -25,7 +25,7 @@ namespace Melodify.Components
             PanelInitialize();
 
             MusicPath = path;
-            _musicTitle.Text = TagFile.GetTitle(path);
+            _musicTitle.Text = TagFile.GetTitle(path).Data;
             _musicCover.Image = TagFile.GetCover(path).GetThumbnailImage(40, 40, null, IntPtr.Zero);
         }
 

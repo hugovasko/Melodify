@@ -209,23 +209,17 @@ namespace Melodify.Forms
 
                 PlaybackBarControl.Max = Convert.ToInt32(ConvertFrom.TimeToSeconds(_audioFileReader.TotalTime));
                 _audioFileReader.Volume = TrackBarVolumeState.Value / 10f;
-
-                //  This condition is related to the (Exception) Code Part
-                //  The Path Variable will be changed to the CurrentPlayingMusic, for get the original audio meatdata
+                
                 if (_isFileGenerateException)
                 {
                     path = Music[_currentPlayingMusicIndex];
                 }
 
-                //  Change the Label Text to the Music Total Time
-                //  Change the PictureBox BackgroundImage to the Music Cover
                 LabelMusicEndTime.Text = _audioFileReader.TotalTime.ToString(@"mm\:ss");
                 PictureBoxMusicCover.BackgroundImage = TagFile.GetCover(path);
 
-                //  Change the Form Title to the Music Title + Artist
                 Text = TagFile.GetArtists(path) + " - " + TagFile.GetTitle(path);
 
-                //  Change the Current MusicPanel BackgroundColor, and reset the others
                 foreach (MusicPanel musicPanel in FlowLayoutPanelMusic.Controls)
                 {
                     if (musicPanel.MusicPath == path)
@@ -238,15 +232,12 @@ namespace Melodify.Forms
                     }
                 }
 
-                //  Reset the "IsFileGenerateException" value to false
                 _isFileGenerateException = false;
             }
             catch
             {
                 try
                 {
-                    //  If Audio File GenerateException, Convert it to 'wav' and save it
-                    //  on a Temp File, so we can play it later
                     _audioFileReader = null;
 
                     using (var reader = new MediaFoundationReader(Music[_currentPlayingMusicIndex]))
@@ -256,14 +247,11 @@ namespace Melodify.Forms
                             Directory.CreateDirectory("TempFiles/");
                         }
 
-                        //  Save the 'wav' audio on the Temp File
                         WaveFileWriter.CreateWaveFile("TempFiles/temp.wav", reader);
                     }
 
-                    //  Change the "IsFileGenerateException" value to true, because the File is Generate Exception
                     _isFileGenerateException = true;
-
-                    //  Try to play the Temp File, if isn't played alert a message to the user
+                    
                     MusicInitialize("TempFiles/temp.wav");
                 }
                 catch (Exception ex)
@@ -324,7 +312,6 @@ namespace Melodify.Forms
         private void ButtonNext_Click(object sender, EventArgs e)
         {
             //  Check if the Current Playing Music isn't the last one on list, and the list isn't clear
-            //  and check if the LoopState equale All, to reaPeat the Playlist from the first
             if (_currentPlayingMusicIndex != Music.Count - 1 && Music.Count != 0)
             {
                 MusicInitialize(Music[++_currentPlayingMusicIndex]);
@@ -523,7 +510,7 @@ namespace Melodify.Forms
             {
                 if (musicPanel.BackColor == Color.FromArgb(28, 28, 28))
                 {
-                    //  if the removed MusicPanel is the Playong Music, Start the next one
+                    //  if the removed MusicPanel is the Playing Music, Start the next one
                     if (musicPanel.MusicPath == Music[_currentPlayingMusicIndex])
                     {
                         ButtonNext.PerformClick();
@@ -620,7 +607,7 @@ namespace Melodify.Forms
 
         private void SortByTitleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //  I use the OrderBy function and the Linq, to sort the list on the title
+            //  Using the OrderBy function and the LINQ to sort the list on the title
             var sortedList = Music.OrderBy(o => TagFile.GetTitle(o)).ToList();
 
             // Clear the Lists and initialize the index and waveoutevent to null
@@ -644,43 +631,6 @@ namespace Melodify.Forms
         {
             var sortedList = Music.OrderBy(x => TagFile.GetArtists(x)).ThenBy(x => TagFile.GetAlbum(x))
                 .ThenBy(x => TagFile.GetTrack(x)).ToList();
-            // The only reason make me keep All this Code bellow on comment, is that i found a better and small way to do it (The Line upove)
-
-            #region The Comment Code
-
-            /*  //  I use the OrderBy function and the Linq, to sort the list on the Album
-            List<string> MusicListCopy = Music.OrderBy(o => TagFile.Album(o)).ToList();
-            List<string> AllAlbumsName = new List<string>();
-
-            foreach (var item in MusicListCopy)
-                AllAlbumsName.Add(TagFile.Album(item));
-            //  Reamove all the rapeated AlbumName on the list
-            AllAlbumsName = AllAlbumsName.Distinct().ToList();
-
-            List<string> SortedList = new List<string>();
-            List<string> OnlyOneAlbumMusic = new List<string>();
-
-            foreach (var ItemInAllAlbumsName in AllAlbumsName)
-            {
-                foreach (var ItemInMusic in Music)
-                {
-                    if (TagFile.Album(ItemInMusic) == ItemInAllAlbumsName)
-                    {
-                        OnlyOneAlbumMusic.Add(ItemInMusic);
-                        MusicListCopy.Remove(ItemInMusic);
-                    }
-                }
-
-                OnlyOneAlbumMusic = OnlyOneAlbumMusic.OrderBy(o => TagFile.Track(o)).ToList();
-
-                foreach (var item in OnlyOneAlbumMusic)
-                    SortedList.Add(item);
-                OnlyOneAlbumMusic.Clear();
-            }
-
-            SortedList = SortedList.OrderBy(o => TagFile.Artist(o)).ToList();   */
-
-            #endregion
 
             // Clear the Lists and initialize the index and waveoutevent to null
             ClearListToolStripMenuItem.PerformClick();
@@ -701,7 +651,7 @@ namespace Melodify.Forms
 
         private void SortByAlbumToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //  Sort thelist by the Album then the Track Number
+            //  Sort the list by the Album then the Track Number
             var sortedList = Music.OrderBy(x => TagFile.GetAlbum(x)).ThenBy(x => TagFile.GetTrack(x)).ToList();
 
             // Clear the Lists and initialize the index and waveoutevent to null
@@ -808,7 +758,7 @@ namespace Melodify.Forms
             // Clear the Lists and initialize the index and waveoutevent to null
             ClearListToolStripMenuItem.PerformClick();
 
-            //  Delete the Temp Files
+            //  Delete temp files
             if (Directory.Exists("TempFiles/"))
             {
                 Directory.Delete("TempFiles/", true);

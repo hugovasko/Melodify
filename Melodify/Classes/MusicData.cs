@@ -74,4 +74,47 @@ namespace Melodify.Classes
             return !string.IsNullOrEmpty(MusicFile.Tag.Year.ToString()) ? MusicFile.Tag.Year.ToString() : "0000";
         }
     }
+
+    public class Track : MusicData
+    {
+        public Track(string musicPath) : base(musicPath) { }
+
+        protected override string GetMusicData()
+        {
+            var trackNumber = MusicFile.Tag.Track.ToString();
+            return trackNumber.Length == 1 ? "0" + trackNumber : trackNumber;
+        }
+    }
+
+    public class TrackCount : MusicData
+    {
+        public TrackCount(string musicPath) : base(musicPath) { }
+
+        protected override string GetMusicData()
+        {
+            return !string.IsNullOrEmpty(MusicFile.Tag.TrackCount.ToString()) ? MusicFile.Tag.TrackCount.ToString() : "0";
+        }
+    }
+
+    public class Genre : MusicData
+    {
+        public Genre(string musicPath) : base(musicPath) { }
+
+        protected override string GetMusicData()
+        {
+            string genres = string.Join(",", MusicFile.Tag.Genres);
+            return !string.IsNullOrEmpty(genres) ? genres : "No Genres";
+        }
+    }
+
+    public class Lyrics : MusicData
+    {
+        public Lyrics(string musicPath) : base(musicPath) { }
+
+        protected override string GetMusicData()
+        {
+            return !string.IsNullOrEmpty(MusicFile.Tag.Lyrics) ? MusicFile.Tag.Lyrics : "No Lyrics";
+        }
+    }
+
 }

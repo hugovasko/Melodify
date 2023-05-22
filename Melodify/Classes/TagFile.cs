@@ -45,74 +45,33 @@ namespace Melodify.Classes
 
         public static string GetTrack(string musicPath)
         {
-            try
+            using (var track = new Track(musicPath))
             {
-                if (File.Create(musicPath).Tag.Track.ToString().Length == 1)
-                {
-                    return "0" + File.Create(musicPath).Tag.Track;
-                }
-
-                return File.Create(musicPath).Tag.Track.ToString();
-            }
-            catch
-            {
-                return "";
+                return track.ToString();
             }
         }
 
         public static string GetTrackCount(string musicPath)
         {
-            try
+            using (var trackCount = new TrackCount(musicPath))
             {
-                return File.Create(musicPath).Tag.TrackCount.ToString();
+                return trackCount.ToString();
             }
-            catch
-            {
-                return "";
-            }
-        }
-
-        public static string GetDisc(string musicPath)
-        {
-            return File.Create(musicPath).Tag.Disc.ToString();
-        }
-
-        public static string GetDiscCount(string musicPath)
-        {
-            return File.Create(musicPath).Tag.DiscCount.ToString();
-        }
-
-        public static string GetComposers(string musicPath)
-        {
-            return string.Join(",", File.Create(musicPath).Tag.Composers);
         }
 
         public static string GetGenre(string musicPath)
         {
-            try
+            using (var genres = new Genre(musicPath))
             {
-                return string.Join(",", File.Create(musicPath).Tag.Genres);
+                return genres.ToString();
             }
-            catch
-            {
-                return "";
-            }
-        }
-
-        public static string GetGrouping(string musicPath)
-        {
-            return File.Create(musicPath).Tag.Grouping;
         }
 
         public static string GetLyrics(string musicPath)
         {
-            try
+            using (var lyrics = new Lyrics(musicPath))
             {
-                return File.Create(musicPath).Tag.Lyrics;
-            }
-            catch
-            {
-                return "";
+                return lyrics.ToString();
             }
         }
 
@@ -179,43 +138,11 @@ namespace Melodify.Classes
             track.Save();
         }
 
-        public static void SetDisc(string musicPath, string disc)
-        {
-            var track = File.Create(musicPath);
-
-            track.Tag.Disc = uint.Parse(disc);
-            track.Save();
-        }
-
-        public static void SetDiscCount(string musicPath, string discCount)
-        {
-            var track = File.Create(musicPath);
-
-            track.Tag.DiscCount = uint.Parse(discCount);
-            track.Save();
-        }
-
-        public static void SetComposers(string musicPath, string composers)
-        {
-            var track = File.Create(musicPath);
-
-            track.Tag.Composers = composers.Split(',');
-            track.Save();
-        }
-
         public static void SetGenre(string musicPath, string genres)
         {
             var track = File.Create(musicPath);
 
             track.Tag.Genres = genres.Split(',');
-            track.Save();
-        }
-
-        public static void SetGrouping(string musicPath, string grouping)
-        {
-            var track = File.Create(musicPath);
-
-            track.Tag.Grouping = grouping;
             track.Save();
         }
 

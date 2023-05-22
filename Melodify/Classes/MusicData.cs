@@ -7,9 +7,10 @@ namespace Melodify.Classes
     {
         protected File MusicFile { get; }
         private string Data { get;  set; } = "";
-        protected MusicData(File file)
+        protected MusicData(string musicPath)
         {
-            MusicFile = file;
+            MusicFile = File.Create(musicPath);
+            ExtractData();
         }
         public void Dispose()
         {
@@ -35,10 +36,8 @@ namespace Melodify.Classes
 
     public class Title : MusicData
     {
-        public Title(string musicPath) : base(File.Create(musicPath))
-        {
-            ExtractData();
-        }
+        public Title(string musicPath) : base(musicPath) {}
+
         protected override string GetMusicData()
         {
             return !string.IsNullOrEmpty(MusicFile.Tag.Title) ? MusicFile.Tag.Title : "No Title";
@@ -47,10 +46,8 @@ namespace Melodify.Classes
 
     public class Artists : MusicData
     {
-        public Artists(string musicPath) : base(File.Create(musicPath))
-        {
-            ExtractData();
-        }
+        public Artists(string musicPath) : base(musicPath) {}
+        
         protected override string GetMusicData()
         {
             string artists = string.Join(",", MusicFile.Tag.AlbumArtists);
@@ -60,10 +57,7 @@ namespace Melodify.Classes
 
     public class Album : MusicData
     {
-        public Album(string musicPath) : base(File.Create(musicPath))
-        {
-            ExtractData();
-        }
+        public Album(string musicPath) : base(musicPath) {}
 
         protected override string GetMusicData()
         {
@@ -73,10 +67,7 @@ namespace Melodify.Classes
 
     public class Year : MusicData
     {
-        public Year(string musicPath) : base(File.Create(musicPath))
-        {
-            ExtractData();
-        }
+        public Year(string musicPath) : base(musicPath) {}
 
         protected override string GetMusicData()
         {

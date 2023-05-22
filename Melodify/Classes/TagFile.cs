@@ -13,35 +13,33 @@ namespace Melodify.Classes
     {
         public static string GetTitle(string musicPath)
         {
-            return new Title(musicPath).ToString();
+            using (var title = new Title(musicPath))
+            {
+                return title.ToString();
+            }
         }
 
         public static string GetArtists(string musicPath)
         {
-            return new Artists(musicPath).ToString();
+            using (var artists = new Artists(musicPath))
+            {
+                return artists.ToString();
+            }
         }
 
         public static string GetAlbum(string musicPath)
         {
-            try
+            using (var album = new Album(musicPath))
             {
-                return File.Create(musicPath).Tag.Album;
-            }
-            catch
-            {
-                return "";
+                return album.ToString();
             }
         }
 
         public static string GetYear(string musicPath)
         {
-            try
+            using (var year = new Year(musicPath))
             {
-                return File.Create(musicPath).Tag.Year.ToString();
-            }
-            catch
-            {
-                return "";
+                return year.ToString();
             }
         }
 

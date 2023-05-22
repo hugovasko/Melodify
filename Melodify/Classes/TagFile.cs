@@ -13,168 +13,145 @@ namespace Melodify.Classes
     {
         public static string GetTitle(string musicPath)
         {
-            using (var title = new Title(musicPath))
+            using (var title = new TitleGetter(musicPath))
             {
-                return title.ToString();
+                return title.Data;
             }
         }
 
         public static string GetArtists(string musicPath)
         {
-            using (var artists = new Artists(musicPath))
+            using (var artists = new ArtistsGetter(musicPath))
             {
-                return artists.ToString();
+                return artists.Data;
             }
         }
 
         public static string GetAlbum(string musicPath)
         {
-            using (var album = new Album(musicPath))
+            using (var album = new AlbumGetter(musicPath))
             {
-                return album.ToString();
+                return album.Data;
             }
         }
 
         public static string GetYear(string musicPath)
         {
-            using (var year = new Year(musicPath))
+            using (var year = new YearGetter(musicPath))
             {
-                return year.ToString();
+                return year.Data;
             }
         }
 
         public static string GetTrack(string musicPath)
         {
-            using (var track = new Track(musicPath))
+            using (var track = new TrackGetter(musicPath))
             {
-                return track.ToString();
+                return track.Data;
             }
         }
 
         public static string GetTrackCount(string musicPath)
         {
-            using (var trackCount = new TrackCount(musicPath))
+            using (var trackCount = new TrackCountGetter(musicPath))
             {
-                return trackCount.ToString();
+                return trackCount.Data;
             }
         }
 
         public static string GetGenre(string musicPath)
         {
-            using (var genres = new Genre(musicPath))
+            using (var genres = new GenreGetter(musicPath))
             {
-                return genres.ToString();
+                return genres.Data;
             }
         }
 
         public static string GetLyrics(string musicPath)
         {
-            using (var lyrics = new Lyrics(musicPath))
+            using (var lyrics = new LyricsGetter(musicPath))
             {
-                return lyrics.ToString();
+                return lyrics.Data;
             }
         }
 
         public static Image GetCover(string musicPath)
         {
-            try
+            using (var cover = new CoverGetter(musicPath))
             {
-                var pic = File.Create(musicPath).Tag.Pictures[0]; //pic contains data for image.
-                var stream = new MemoryStream(pic.Data.Data); // create an image in memory stream
-                return new Bitmap(stream);
-            }
-            catch
-            {
-                return Resources.Melodify;
+                return cover.Data;
             }
         }
 
-
         public static void SetTitle(string musicPath, string title)
         {
-            var track = File.Create(musicPath);
-
-            track.Tag.Title = title;
-            track.Save();
+            using (var titleSetter = new TitleSetter(musicPath))
+            {
+                titleSetter.SetMusicData(title);
+            }
         }
 
         public static void SetArtists(string musicPath, string artists)
         {
-            var track = File.Create(musicPath);
-
-            track.Tag.AlbumArtists = artists.Split(',');
-            track.Save();
+            using (var artistsSetter = new ArtistsSetter(musicPath))
+            {
+                artistsSetter.SetMusicData(artists);
+            }
         }
 
         public static void SetAlbum(string musicPath, string album)
         {
-            var track = File.Create(musicPath);
-
-            track.Tag.Album = album;
-            track.Save();
+            using (var albumSetter = new AlbumSetter(musicPath))
+            {
+                albumSetter.SetMusicData(album);
+            }
         }
 
         public static void SetYear(string musicPath, string year)
         {
-            var track = File.Create(musicPath);
-
-            track.Tag.Year = uint.Parse(year);
-            track.Save();
+            using (var yearSetter = new YearSetter(musicPath))
+            {
+                yearSetter.SetMusicData(year);
+            }
         }
 
         public static void SetTrackN(string musicPath, string trackN)
         {
-            var track = File.Create(musicPath);
-
-            track.Tag.Track = uint.Parse(trackN);
-            track.Save();
+            using (var trackSetter = new TrackSetter(musicPath))
+            {
+                trackSetter.SetMusicData(trackN);
+            }
         }
 
         public static void SetTrackCount(string musicPath, string trackCount)
         {
-            var track = File.Create(musicPath);
-
-            track.Tag.TrackCount = uint.Parse(trackCount);
-            track.Save();
+            using (var trackCountSetter = new TrackCountSetter(musicPath))
+            {
+                trackCountSetter.SetMusicData(trackCount);
+            }
         }
 
         public static void SetGenre(string musicPath, string genres)
         {
-            var track = File.Create(musicPath);
-
-            track.Tag.Genres = genres.Split(',');
-            track.Save();
+            using (var genreSetter = new GenreSetter(musicPath))
+            {
+                genreSetter.SetMusicData(genres);
+            }
         }
 
         public static void SetLyrics(string musicPath, string lyrics)
         {
-            var track = File.Create(musicPath);
-
-            track.Tag.Lyrics = lyrics;
-            track.Save();
+            using (var lyricsSetter = new LyricsSetter(musicPath))
+            {
+                lyricsSetter.SetMusicData(lyrics);
+            }
         }
 
-        public static void SetCover(string musicPath, Image picture)
+        public static void SetCover(string musicPath, Image cover)
         {
-            try
+            using (var coverSetter = new CoverSetter(musicPath))
             {
-                var track = File.Create(musicPath);
-
-                track.Tag.Pictures = new IPicture[]
-                {
-                    new Picture(new ByteVector((byte[])new ImageConverter().ConvertTo(picture, typeof(byte[]))))
-                    {
-                        Type = PictureType.FrontCover,
-                        Description = "Cover",
-                        MimeType = MediaTypeNames.Image.Jpeg
-                    }
-                };
-                track.Save();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), @"====:TagLib -SetCover- :====");
-                MessageBox.Show(ex.GetType().ToString(), @"====:TagLib -SetCover- :====");
+                coverSetter.SetMusicData(cover);
             }
         }
     }
